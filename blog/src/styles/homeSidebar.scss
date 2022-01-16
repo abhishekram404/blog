@@ -1,0 +1,95 @@
+@import "globals.scss";
+
+.home-sidebar {
+  .side-nav {
+    list-style-type: none;
+    .side-nav-item {
+      margin-bottom: 10px;
+      padding: 10px 15px;
+      border-radius: 15px;
+      transition: 0.5s;
+      span {
+        display: grid;
+        place-items: center;
+      }
+      .profile-link {
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+        img {
+          width: 25px;
+        }
+        span {
+          margin-left: 10px;
+          font-family: "Poppins";
+          font-size: 0.9rem;
+          word-wrap: normal;
+        }
+      }
+      &:not(:first-child) {
+        a {
+          display: grid;
+          grid-template-columns: 25px 1fr;
+          column-gap: 15px;
+          font-size: 1rem;
+        }
+      }
+
+      &:hover {
+        background-color: rgba($color: $textGrey, $alpha: 0.8);
+      }
+    }
+    .active {
+      background-color: rgba($color: $primaryBlue, $alpha: 0.9);
+      color: $white !important;
+      .profile-link {
+        span {
+          color: $white !important;
+        }
+      }
+      &:hover {
+        background-color: rgba($color: $primaryBlue, $alpha: 1);
+      }
+    }
+  }
+}
+.home-sidebar-light {
+  .side-nav {
+    .side-nav-item {
+      span {
+      }
+      .profile-link {
+        img {
+        }
+        span {
+          color: $black;
+        }
+      }
+      &:not(:first-child) {
+        color: $darkGrey;
+      }
+    }
+  }
+}
+
+.home-sidebar-dark {
+  .side-nav {
+    .side-nav-item {
+      span {
+      }
+      .profile-link {
+        img {
+        }
+        span {
+          color: $white;
+        }
+      }
+      &:not(:first-child) {
+        color: $textHeading;
+      }
+    }
+    hr {
+      background-color: $textGrey;
+    }
+  }
+}

@@ -1,0 +1,57 @@
+@import "globals.scss";
+
+.homepage {
+  .container {
+    > .row {
+      > .feed {
+        > h2 {
+          font-family: "Poppins";
+          margin-bottom: 20px;
+        }
+      }
+      .sidebar-section {
+        border: 1px solid rgba($color: $textGrey, $alpha: 0.3);
+        border-radius: 15px;
+        height: fit-content;
+        position: sticky;
+        top: 10%;
+      }
+    }
+  }
+}
+
+.homepage_dark {
+  .container {
+    > .row {
+      > .feed {
+        > h2 {
+          color: $textHeading;
+        }
+      }
+      .sidebar-section {
+        border-color: rgba($color: $textGrey, $alpha: 0.2);
+        color: $white;
+        hr {
+          background-color: $textGrey;
+        }
+      }
+    }
+  }
+}
+
+.homepage_light {
+  .container {
+    > .row {
+      > .feed {
+        > h2 {
+          color: $darkGrey;
+        }
+      }
+      .sidebar-section {
+        border-color: rgba($color: $textGrey, $alpha: 0.5);
+
+        color: $darkGrey;
+      }
+    }
+  }
+}

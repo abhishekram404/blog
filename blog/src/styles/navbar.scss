@@ -1,0 +1,131 @@
+@import "globals.scss";
+.navbar {
+  position: sticky;
+  top: 0;
+  z-index: 1000000;
+  .container {
+    > a {
+      text-decoration: none;
+      color: unset;
+      font-family: "Montserrat";
+      font-weight: 600;
+      font-size: 1.8rem;
+    }
+
+    .navbar-nav {
+      .nav-item {
+        font-family: "Poppins";
+        // font-size: 0.9rem;
+        a,
+        button {
+          text-decoration: none;
+        }
+
+        .profile-link {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          &:hover {
+            background: rgba($color: $textGrey, $alpha: 0.5);
+          }
+          img {
+            width: 25px;
+          }
+          span {
+            margin-left: 10px;
+            font-family: "Poppins";
+          }
+        }
+        .cta {
+          color: $white;
+        }
+      }
+      .dark-mode-switch {
+        padding: 5px;
+        height: 40px;
+        width: 40px;
+        display: grid;
+        place-items: center;
+        border-radius: 50%;
+        cursor: pointer;
+        margin-left: auto;
+        .icon {
+          font-size: 1.5rem;
+        }
+      }
+    }
+  }
+}
+.navbar_dark {
+  border-bottom: 2px solid $grey;
+
+  background-color: $black;
+  color: $textHeading;
+  .container {
+    .navbar_brand {
+      color: $textHeading;
+    }
+    .menu-btn {
+      .menu-btn-icon {
+        color: $white;
+      }
+    }
+    .navbar-nav {
+      li {
+        > *,
+        a {
+          color: $textHeading;
+        }
+      }
+      .dark-mode-switch {
+        background-color: $darkGrey;
+        .icon {
+          color: $textGrey;
+        }
+      }
+    }
+  }
+}
+
+.navbar_light {
+  border-bottom: 1px solid $darkGrey;
+  background-color: $white;
+  color: $black;
+  .navbar_brand {
+    color: #1e1e1e;
+  }
+  .navbar-nav {
+    li {
+      > *,
+      a {
+        color: $darkGrey;
+      }
+    }
+    .dark-mode-switch {
+      background-color: $textGrey;
+      .icon {
+        color: $black;
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 576px) {
+  html {
+    font-size: 14px;
+  }
+  .navbar-nav {
+    width: 100%;
+    display: none !important;
+    .nav-item {
+      a,
+      button {
+        font-size: 0.9rem;
+      }
+    }
+  }
+  .expanded {
+    display: flex !important;
+    margin-top: 15px;
+  }
+}
