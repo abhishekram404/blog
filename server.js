@@ -9,17 +9,12 @@ const cookieParser = require("cookie-parser");
 const cors = require("cors");
 const path = require("path");
 dotenv.config();
-// const allowedOrigins = [
-//   "https://blog-eight-roan-16.vercel.app/",
-//   "https://blog-6dkd0r3wd-abhishekram404.vercel.app/",
-// ];
 
 const isProduction = process.env.NODE_ENV === "production";
 
 app.use((req, res, next) => {
   res.header(
     "Access-Control-Allow-Origin",
-    // "https://blog-git-development-abhishekram404.vercel.app"
     isProduction
       ? "https://fucking-test-blog-api.herokuapp.com"
       : "http://localhost:3000"
@@ -31,7 +26,6 @@ app.use((req, res, next) => {
 
 app.use(
   cors({
-    // origin: "https://blog-git-development-abhishekram404.vercel.app",
     origin: isProduction
       ? "https://fucking-test-blog-api.herokuapp.com"
       : "http://localhost:3000",

@@ -10,7 +10,7 @@ import AlertTemplate from "react-alert-template-basic";
 // const isProduction = process.env.REACT_APP_NODE_ENV === "production";
 const isProduction = true;
 axios.defaults.baseURL = isProduction
-  ? "https://react-blog-restapi.herokuapp.com/api/"
+  ? "https://fucking-test-blog-api.herokuapp.com/api/"
   : "http://localhost:4000/api/";
 axios.defaults.withCredentials = true;
 ReactDOM.render(

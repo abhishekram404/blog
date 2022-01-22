@@ -99,14 +99,14 @@ module.exports.login = async (req, res) => {
       maxAge: 900000000,
       secure: process.env.NODE_ENV === "production" ? true : false,
       sameSite: "None",
-      domain: "blog-git-main-abhishekram404.vercel.app",
+      domain: "fucking-test-blog-api.herokuapp.com",
     });
     res.cookie("isUserLoggedIn", 1, {
       httpOnly: false,
       maxAge: 900000000,
       secure: process.env.NODE_ENV === "production" ? true : false,
       sameSite: "None",
-      domain: "blog-git-main-abhishekram404.vercel.app",
+      domain: "fucking-test-blog-api.herokuapp.com",
     });
     return res
       .status(200)
