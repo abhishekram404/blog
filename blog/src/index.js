@@ -7,10 +7,10 @@ import store from "redux/store";
 import axios from "axios";
 import { transitions, positions, Provider as AlertProvider } from "react-alert";
 import AlertTemplate from "react-alert-template-basic";
-// const isProduction = process.env.REACT_APP_NODE_ENV === "production";
-const isProduction = true;
+const isProduction = process.env.REACT_APP_NODE_ENV !== "development";
+// const isProduction = true;
 axios.defaults.baseURL = isProduction
-  ? "https://fucking-test-blog-api.herokuapp.com/api/"
+  ? "https://abhishekram404-blog.herokuapp.com/api/"
   : "http://localhost:4000/api/";
 axios.defaults.withCredentials = true;
 ReactDOM.render(
