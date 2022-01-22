@@ -80,7 +80,7 @@ function App() {
         <Suspense fallback={<Loading />}>
           <Switch>
             <Route path="/" exact component={Homepage} />
-            <Route path="/post" component={Post} />
+            <Route path="/post/:id" component={Post} />
             <Route path="/register" component={Register} />
             <Route path="/login" component={Login} />
             <ProtectedRoute path="/create-post" component={CreatePost} />

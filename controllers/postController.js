@@ -69,46 +69,16 @@ module.exports.fetchHomepagePosts = async (req, res) => {
       // .skip(Number(skip))
       // .limit(3)
       .lean();
-
-    // let result = posts.map(async (post) => {
-    //   let author = await User.findById(post.author, "name username").lean();
-    //   return {
-    //     ...post,
-    //     author,
-    //   };
-    // });
-    // Promise.all(result).then((r) => {
     console.log(posts);
     return res.send({
       success: true,
       message: "Posts fetched successfully",
       details: posts,
     });
-    // });
-
-    // console.log(await result);
-
-    // const embedAuthorInfo = (posts) => {
-    //   var result = [];
-    //   posts.forEach(async (post) => {
-    //     let author = await User.findById(post.author, "name username").lean();
-    //     await result.push({
-    //       ...post,
-    //       author: {
-    //         name: author.name,
-    //         username: author.username,
-    //       },
-    //     });
-    //     console.log(result);
-    //   });
-    //   return result;
-    // };
-    // let r = await embedAuthorInfo(posts);
-    // console.log(r);
   } catch (error) {
     console.log(error);
     return res.send({
-      success: true,
+      success: false,
       message: "Something went wrong while fetching posts.",
       details: null,
     });
@@ -141,8 +111,41 @@ module.exports.fetchProfilePosts = async (req, res) => {
   } catch (error) {
     console.log(error);
     return res.send({
-      success: true,
+      success: false,
       message: "Something went wrong while fetching posts.",
+      details: null,
+    });
+  }
+};
+
+module.exports.fetchAPost = async (req, res) => {
+  try {
+    const { id } = await req.query;
+    const foundPost = await Post.findOne({ published: true, _id: id }).select(
+      "title content author createdAt category likes comments"
+    );
+
+    if (!foundPost) {
+      return res.send({
+        success: false,
+        message: "The post that you requested for doesn't exist.",
+        details: null,
+      });
+    }
+
+    return res
+      .send({
+        success: true,
+        message: "Post fetched successfully",
+        details: foundPost,
+      })
+      .status(200);
+    console.log(foundPost);
+  } catch (error) {
+    console.log(error);
+    return res.send({
+      success: false,
+      message: "Something went wrong while fetching the post.",
       details: null,
     });
   }

@@ -5,6 +5,9 @@ const {
   INFO,
   FETCH_PROFILE_POST_SUCCESS,
   FETCH_PROFILE_POST_FAILURE,
+  FETCH_A_POST_SUCCESS,
+  FETCH_A_POST_FAILURE,
+  ERROR,
 } = require("redux/constants");
 
 export const fetch_posts = (skip = 0) => {
@@ -58,6 +61,38 @@ export const fetch_profile_post = ({ skip, profile }) => {
           type: INFO,
           payload: "Something went wrong while fetching the posts.",
         });
+    }
+  };
+};
+
+export const fetch_a_post = (postId) => {
+  return async (dispatch) => {
+    try {
+      console.log(postId);
+      const { data } = await axios.get(`/post/fetch?id=${postId}`);
+      console.log(data);
+      switch (data.success) {
+        case true:
+          return dispatch({
+            type: FETCH_A_POST_SUCCESS,
+            payload: data.details,
+          });
+        case false:
+          return dispatch({
+            type: FETCH_POST_FAILURE,
+            payload: data.details,
+          });
+        default:
+          return dispatch({
+            type: ERROR,
+            payload: "Something went wrong while fetching the post.",
+          });
+      }
+    } catch (error) {
+      dispatch({
+        type: ERROR,
+        payload: "Something went wrong while fetching the post.",
+      });
     }
   };
 };

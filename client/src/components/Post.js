@@ -11,11 +11,29 @@ import {
 } from "react-icons/md";
 import featuredImage from "assets/featured.jpg";
 // import CommentSection from "./CommentSection";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import parser from "html-react-parser";
+import { useParams } from "react-router-dom";
+import { useEffect } from "react";
+import { fetch_a_post } from "redux/actions/postActions";
+import moment from "moment";
 const CommentSection = React.lazy(() => import("./CommentSection"));
 export default function Post({ title, body, category, preview = false }) {
   const { dark } = useSelector((state) => state.common);
+  const { id } = useParams();
+  const dispatch = useDispatch();
+  const visitedPosts = useSelector((state) =>
+    state.post.visitedPosts.filter((post) => post._id === id)
+  );
+
+  const [post] = visitedPosts;
+  console.log(post);
+  useEffect(() => {
+    if (visitedPosts.some((post) => post._id === id)) {
+      return;
+    }
+    dispatch(fetch_a_post(id));
+  }, []);
   return (
     <div
       className={clsx(
@@ -29,7 +47,7 @@ export default function Post({ title, body, category, preview = false }) {
           <div className={clsx("title-bar row align-items-start ")}>
             <div className="col-10  title-row">
               <h1 className="post-title">
-                {title ? title : "Post title goes here..."}
+                {post ? post.title : "Post title goes here..."}
               </h1>
             </div>
             <div className="options-button col-2   text-end p-0 px-sm-4">
@@ -38,10 +56,11 @@ export default function Post({ title, body, category, preview = false }) {
           </div>
           <div className="info-row mb-3">
             <span className="author-col">
-              Article by <b>Abhishek Ram</b>
+              Article by <b>{post ? post.author.authorName : "Author name"}</b>
             </span>
-            &nbsp; &bull; &nbsp; Published few seconds ago &nbsp; &bull; &nbsp;{" "}
-            {category ?? "Undefined"}
+            &nbsp; &bull; &nbsp; Published on{" "}
+            {post ? moment(post.createdAt).format("LLL") : "Time"} &nbsp; &bull;
+            &nbsp; {post ? post.category : "Undefined"}
           </div>
 
           <div className="featured-image">
@@ -49,8 +68,8 @@ export default function Post({ title, body, category, preview = false }) {
           </div>
 
           <div className="post-body">
-            {body ? (
-              parser(body)
+            {post ? (
+              parser(post.content)
             ) : (
               <p>
                 There were only two ways to get out of this mess if they all

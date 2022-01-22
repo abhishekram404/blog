@@ -21,6 +21,7 @@ const FeedItem = ({
   likes,
   comments,
   selfMode,
+  id,
 }) => {
   const { dark } = useSelector((state) => state.common);
   return (
@@ -38,7 +39,7 @@ const FeedItem = ({
         /> */}
       </div>
       <div className="card-body post-cont">
-        <Link to="/post">
+        <Link to={`/post/${id}`}>
           <h3 className="card-title post-title">{title}</h3>
           <p className="card-text post-body">
             {tags &&

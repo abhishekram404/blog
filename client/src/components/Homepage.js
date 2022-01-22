@@ -40,6 +40,7 @@ export default function Homepage() {
                     category={post.category}
                     author={post.author}
                     key={post._id}
+                    id={post._id}
                   />
                 ))
               ) : (
