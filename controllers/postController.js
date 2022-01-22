@@ -63,7 +63,7 @@ module.exports.fetchHomepagePosts = async (req, res) => {
     const { skip } = await req.query;
     const posts = await Post.find(
       { published: true },
-      "title content category author likes comments"
+      "title  category author likes comments tags"
     )
       .sort({ _id: -1 })
       // .skip(Number(skip))

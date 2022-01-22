@@ -34,7 +34,7 @@ export default function Homepage() {
                 fetchedPosts.map((post) => (
                   <FeedItem
                     title={post.title}
-                    content={post.content}
+                    tags={post.tags}
                     likes={post.likes.length}
                     comments={post.comments.length}
                     category={post.category}

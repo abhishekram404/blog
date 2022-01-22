@@ -93,9 +93,6 @@ module.exports.login = async (req, res) => {
         domain: "abhishekram404-blog.herokuapp.com",
         sameSite: "None",
       }),
-      // domain: isProduction
-      //   ? "abhishekram404-blog.herokuapp.com"
-      //   : "localhost:3000",
     });
     res.cookie("isUserLoggedIn", 1, {
       httpOnly: false,
@@ -106,10 +103,6 @@ module.exports.login = async (req, res) => {
         domain: "abhishekram404-blog.herokuapp.com",
         sameSite: "None",
       }),
-
-      // domain: isProduction
-      //   ? "abhishekram404-blog.herokuapp.com"
-      //   : "localhost:3000",
     });
     return res
       .status(200)

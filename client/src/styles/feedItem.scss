@@ -38,6 +38,10 @@
     }
     .post-body {
       font-family: "Lato";
+      font-style: italic;
+      > span {
+        margin-right: 7px;
+      }
     }
     > .row {
       justify-content: flex-start;

@@ -1,22 +1,22 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import {
-  MdNotificationAdd,
+  // MdNotificationAdd,
   MdOutlineBookmarkAdd,
-  MdOutlineBookmarkAdded,
+  // MdOutlineBookmarkAdded,
 } from "react-icons/md";
 import { BiComment, BiLike } from "react-icons/bi";
 import { IoIosShareAlt } from "react-icons/io";
-import featuredImage from "assets/featured.jpg";
+// import featuredImage from "assets/featured.jpg";
 import "styles/feedItem.scss";
 import { useSelector } from "react-redux";
 import clsx from "clsx";
 import { AiOutlineUserAdd } from "react-icons/ai";
-import parser from "html-react-parser";
+import { IoCalendarNumberSharp } from "react-icons/io5";
 const FeedItem = ({
   title,
-  content,
-  category,
+  tags,
+  // category,
   author,
   likes,
   comments,
@@ -31,16 +31,21 @@ const FeedItem = ({
       )}
     >
       <div className="thumbnail-cont">
-        <img 
+        {/* <img
           src={featuredImage}
           alt="Thumbnail"
           className="card-img-top thumbnail-image"
-        />
+        /> */}
       </div>
       <div className="card-body post-cont">
         <Link to="/post">
           <h3 className="card-title post-title">{title}</h3>
-          <p className="card-text post-body">{parser(content)}</p>
+          <p className="card-text post-body">
+            {tags &&
+              tags.map((tag, index) => {
+                return <span>{`#${tag}`}</span>;
+              })}
+          </p>
         </Link>
       </div>
       <div className="card-body interaction-cont py-1 row align-items-center justify-content-center">

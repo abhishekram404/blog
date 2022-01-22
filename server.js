@@ -63,7 +63,6 @@ if (process.env.NODE_ENV === "production") {
     return res.sendFile(__dirname, "client", "build", "index.html");
   });
 }
-// app.get("/", (req, res) => res.send("Server is working fine."));
 
 app.use("/api/user", userRoutes);
 app.use("/api/post", postRoutes);
