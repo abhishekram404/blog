@@ -21,7 +21,7 @@ app.use((req, res, next) => {
     "Access-Control-Allow-Origin",
     // "https://blog-git-development-abhishekram404.vercel.app"
     isProduction
-      ? "https://blog-git-main-abhishekram404.vercel.app"
+      ? "https://fucking-test-blog-api.herokuapp.com"
       : "http://localhost:3000"
   );
   res.header("Access-Control-Allow-Credentials", true);
@@ -33,7 +33,7 @@ app.use(
   cors({
     // origin: "https://blog-git-development-abhishekram404.vercel.app",
     origin: isProduction
-      ? "https://blog-git-main-abhishekram404.vercel.app"
+      ? "https://fucking-test-blog-api.herokuapp.com"
       : "http://localhost:3000",
     credentials: true,
     maxAge: "17280000",
