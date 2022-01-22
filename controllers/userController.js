@@ -44,17 +44,7 @@ module.exports.register = async (req, res) => {
       username,
       password: hashedPassword,
     });
-    const token = await newUser.generateToken();
-    res.cookie("jwt", token, {
-      httpOnly: true,
-      maxAge: 900000000,
-      secure: false,
-    });
-    res.cookie("isUserLoggedIn", 1, {
-      httpOnly: false,
-      maxAge: 900000000,
-      secure: false,
-    });
+
     return res.status(200).send({
       success: true,
       message: "Registration successful",
@@ -70,6 +60,7 @@ module.exports.register = async (req, res) => {
 
 module.exports.login = async (req, res) => {
   try {
+    const isProduction = process.env.NODE_ENV === "production";
     const { email, password } = await req.body;
 
     const foundUser = await User.findOne({ email: email.trim() }).select(
@@ -97,16 +88,28 @@ module.exports.login = async (req, res) => {
     res.cookie("jwt", token, {
       httpOnly: true,
       maxAge: 900000000,
-      secure: process.env.NODE_ENV === "production" ? true : false,
-      sameSite: "None",
-      domain: "abhishekram404-blog.herokuapp.com",
+      secure: isProduction ? true : false,
+      ...(isProduction && {
+        domain: "abhishekram404-blog.herokuapp.com",
+        sameSite: "None",
+      }),
+      // domain: isProduction
+      //   ? "abhishekram404-blog.herokuapp.com"
+      //   : "localhost:3000",
     });
     res.cookie("isUserLoggedIn", 1, {
       httpOnly: false,
       maxAge: 900000000,
-      secure: process.env.NODE_ENV === "production" ? true : false,
-      sameSite: "None",
-      domain: "abhishekram404-blog.herokuapp.com",
+      secure: isProduction ? true : false,
+
+      ...(isProduction && {
+        domain: "abhishekram404-blog.herokuapp.com",
+        sameSite: "None",
+      }),
+
+      // domain: isProduction
+      //   ? "abhishekram404-blog.herokuapp.com"
+      //   : "localhost:3000",
     });
     return res
       .status(200)

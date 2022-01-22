@@ -8,6 +8,7 @@ import axios from "axios";
 import { transitions, positions, Provider as AlertProvider } from "react-alert";
 import AlertTemplate from "react-alert-template-basic";
 const isProduction = process.env.REACT_APP_NODE_ENV !== "development";
+console.log("isProduction", isProduction);
 // const isProduction = true;
 axios.defaults.baseURL = isProduction
   ? "https://abhishekram404-blog.herokuapp.com/api/"
