@@ -16,7 +16,7 @@ app.use((req, res, next) => {
   res.header(
     "Access-Control-Allow-Origin",
     isProduction
-      ? "https://fucking-test-blog-api.herokuapp.com"
+      ? "https://abhishekram404-blog.herokuapp.com"
       : "http://localhost:3000"
   );
   res.header("Access-Control-Allow-Credentials", true);
@@ -27,7 +27,7 @@ app.use((req, res, next) => {
 app.use(
   cors({
     origin: isProduction
-      ? "https://fucking-test-blog-api.herokuapp.com"
+      ? "https://abhishekram404-blog.herokuapp.com"
       : "http://localhost:3000",
     credentials: true,
     maxAge: "17280000",
@@ -58,9 +58,9 @@ mongoose.connect(
 );
 
 if (process.env.NODE_ENV === "production") {
-  app.use(express.static(path.join(__dirname, "blog", "build")));
+  app.use(express.static(path.join(__dirname, "client", "build")));
   app.get("/", async (req, res) => {
-    return res.sendFile(__dirname, "blog", "build", "index.html");
+    return res.sendFile(__dirname, "client", "build", "index.html");
   });
 }
 // app.get("/", (req, res) => res.send("Server is working fine."));
