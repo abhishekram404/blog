@@ -8,7 +8,7 @@ import axios from "axios";
 import { transitions, positions, Provider as AlertProvider } from "react-alert";
 import AlertTemplate from "react-alert-template-basic";
 
-const isProduction = process.env.REACT_APP_NODE_ENV !== "development";
+const isProduction = process.env.REACT_APP_NODE_ENV === "production";
 console.log("REACT_APP_NODE_ENV", process.env.REACT_APP_NODE_ENV);
 
 axios.defaults.baseURL = isProduction
