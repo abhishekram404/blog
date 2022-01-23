@@ -7,13 +7,17 @@ import store from "redux/store";
 import axios from "axios";
 import { transitions, positions, Provider as AlertProvider } from "react-alert";
 import AlertTemplate from "react-alert-template-basic";
+
 const isProduction = process.env.REACT_APP_NODE_ENV !== "development";
-console.log("isProduction", isProduction);
-// const isProduction = true;
+console.log("REACT_APP_NODE_ENV", process.env.REACT_APP_NODE_ENV);
+
 axios.defaults.baseURL = isProduction
   ? "https://abhishekram404-blog.herokuapp.com/api/"
   : "http://localhost:4000/api/";
+
 axios.defaults.withCredentials = true;
+// console.log("isProduction", isProduction);
+
 ReactDOM.render(
   <React.StrictMode>
     <Provider store={store}>
