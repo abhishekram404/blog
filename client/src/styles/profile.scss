@@ -22,7 +22,7 @@
             }
           }
           .details-section {
-            font-family: "Lato";
+            font-family: "Lato", sans-serif;
 
             .icon {
               font-size: 1.1rem;
@@ -31,12 +31,12 @@
 
             > * {
               margin-bottom: 10px;
-              font-family: "Lato";
+              font-family: "Lato", sans-serif;
               display: flex;
               align-items: center;
             }
             > h3 {
-              font-family: "Poppins";
+              font-family: "Poppins", sans-serif;
               margin-bottom: 5px;
             }
             > .username {
@@ -52,7 +52,7 @@
             }
             .edit-profile-btn {
               margin-top: 10px;
-              font-family: "Lato";
+              font-family: "Lato", sans-serif;
             }
           }
         }
@@ -60,7 +60,7 @@
           border: 1px solid rgba($color: $textGrey, $alpha: 0.5);
           border-radius: 15px;
           > h4 {
-            font-family: "Poppins";
+            font-family: "Poppins", sans-serif;
             margin-bottom: 20px;
           }
         }

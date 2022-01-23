@@ -7,14 +7,14 @@
     > a {
       text-decoration: none;
       color: unset;
-      font-family: "Montserrat";
+      font-family: "Montserrat", sans-serif;
       font-weight: 600;
       font-size: 1.8rem;
     }
 
     .navbar-nav {
       .nav-item {
-        font-family: "Poppins";
+        font-family: "Poppins", sans-serif;
         // font-size: 0.9rem;
         a,
         button {
@@ -33,7 +33,7 @@
           }
           span {
             margin-left: 10px;
-            font-family: "Poppins";
+            font-family: "Poppins", sans-serif;
           }
         }
         .cta {

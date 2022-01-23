@@ -64,12 +64,7 @@ export default function HomeSidebar() {
               src="https://avatars.dicebear.com/api/male/john.svg?mood[]=happy"
               alt=""
             />
-            {user?.name && (
-              <span>
-                {user.name.split(" ")[0]}{" "}
-                {user.name.split(" ")[user.name.split(" ").length - 1]}
-              </span>
-            )}
+            {user?.name && <span>{user.name.split(" ")[0]} </span>}
           </Link>
         </li>
         <li className={clsx("side-nav-item", active === "" && "active")}>

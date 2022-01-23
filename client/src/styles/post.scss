@@ -4,7 +4,7 @@
   .container {
     article {
       .info-row {
-        font-family: "Lato";
+        font-family: "Lato", sans-serif;
         font-weight: 400;
       }
       .title-bar {
@@ -54,12 +54,12 @@
     }
     .comments-section {
       h4 {
-        font-family: "Poppins";
+        font-family: "Poppins", sans-serif;
         color: #1e1e1e;
       }
       form {
         textarea {
-          font-family: "Poppins";
+          font-family: "Poppins", sans-serif;
           color: #2e2e2e;
         }
       }
@@ -80,17 +80,17 @@
           }
         }
         .comment-details {
-          font-family: "Lato";
+          font-family: "Lato", sans-serif;
           .comment-user {
             font-size: 1.1rem;
             font-weight: 400;
-            font-family: "Poppins";
+            font-family: "Poppins", sans-serif;
           }
           .comment-text {
             font-size: 1rem;
           }
           .comment-time {
-            font-family: "Lato";
+            font-family: "Lato", sans-serif;
           }
         }
       }

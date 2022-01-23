@@ -34,10 +34,10 @@
 
   .card-body {
     .post-title {
-      font-family: "Poppins";
+      font-family: "Poppins", sans-serif;
     }
     .post-body {
-      font-family: "Lato";
+      font-family: "Lato", sans-serif;
       font-style: italic;
       > span {
         margin-right: 7px;
@@ -51,17 +51,17 @@
           height: 100%;
         }
         .author-name {
-          font-family: "Lato";
+          font-family: "Lato", sans-serif;
         }
         .author-username {
           color: $grey;
-          font-family: "Poppins";
+          font-family: "Poppins", sans-serif;
           font-size: 0.8rem;
         }
         .follow-btn {
           text-decoration: none;
           font-size: 0.9rem;
-          font-family: "Lato";
+          font-family: "Lato", sans-serif;
           > .icon {
             font-size: 1.5rem;
           }
@@ -70,7 +70,7 @@
 
       > .edit-btn,
       > .delete-btn {
-        font-family: "Lato";
+        font-family: "Lato", sans-serif;
       }
 
       > .profile-pic-cont {

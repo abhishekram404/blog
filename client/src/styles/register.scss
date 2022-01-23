@@ -8,18 +8,18 @@
     place-items: center;
     form {
       > h2 {
-        font-family: "Montserrat";
+        font-family: "Montserrat", sans-serif;
       }
       max-width: 500px;
       width: 450px;
       .mb-3 {
         label,
         input {
-          font-family: "Poppins";
+          font-family: "Poppins", sans-serif;
         }
       }
       .submit-btn {
-        font-family: "Poppins";
+        font-family: "Poppins", sans-serif;
       }
     }
     .disabled {

@@ -5,13 +5,13 @@
       max-width: 500px;
       margin: 0 auto;
       > h2 {
-        font-family: "Montserrat";
+        font-family: "Montserrat", sans-serif;
         text-align: center;
       }
       .mb-3 {
         label,
         input {
-          font-family: "Poppins";
+          font-family: "Poppins", sans-serif;
         }
       }
     }
