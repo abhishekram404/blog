@@ -23,7 +23,7 @@ export default function Homepage() {
     Socket.on("post-like", (postDetails) => {
       dispatch(update_post(postDetails));
     });
-  }, []);
+  });
 
   return (
     <div
@@ -37,7 +37,7 @@ export default function Homepage() {
           <div className="col-12 feed col-md-9">
             <h2 className="page-title">Feed</h2>
             <Suspense fallback={<Loading />}>
-              {fetchedPosts && user && fetchedPosts.length > 0 ? (
+              {fetchedPosts && fetchedPosts.length > 0 ? (
                 fetchedPosts.map((post) => (
                   <FeedItem
                     title={post.title}
@@ -48,7 +48,7 @@ export default function Homepage() {
                     author={post.author}
                     key={post._id}
                     id={post._id}
-                    isAlreadyLiked={post.likes.includes(user._id)}
+                    isAlreadyLiked={user && post.likes.includes(user._id)}
                   />
                 ))
               ) : (
