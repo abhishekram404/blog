@@ -13,7 +13,7 @@ const auth = async (req, res, next) => {
     if (!decoded.hasOwnProperty("_id")) {
       return res.send({
         success: false,
-        message: "Unauthorized request! Please login again.",
+        message: "Unauthorized request! Please login.",
       });
     }
     req.authUserId = decoded._id;
@@ -21,7 +21,7 @@ const auth = async (req, res, next) => {
   } catch (error) {
     return res.send({
       success: false,
-      message: "Authentication failed ! Please login again.",
+      message: "Authentication failed ! Please login.",
     });
   }
 };

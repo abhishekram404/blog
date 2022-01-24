@@ -144,3 +144,75 @@ module.exports.fetchAPost = async (req, res) => {
     });
   }
 };
+
+module.exports.likePost = async (req, res) => {
+  try {
+    const { authUserId } = await req;
+    const { postId } = await req.body;
+
+    const foundUser = await User.findById(authUserId).lean();
+    const foundPost = await Post.findById(postId).lean();
+
+    if (
+      foundUser.userLikes.some((id) => id.equals(foundPost._id)) ||
+      foundPost.likes.some((id) => id.equals(foundUser._id))
+    ) {
+      const likedPost = await Post.findByIdAndUpdate(
+        foundPost._id,
+        {
+          $pull: {
+            likes: foundUser._id,
+          },
+        },
+        { upsert: true }
+      );
+      const likedBy = await User.findByIdAndUpdate(
+        foundUser._id,
+        {
+          $pull: {
+            userLikes: likedPost._id,
+          },
+        },
+        { upsert: true }
+      );
+      return res.status(200).send({
+        success: true,
+        message: "Post unliked successfully.",
+        details: null,
+      });
+    }
+
+    const likedPost = await Post.findByIdAndUpdate(
+      postId,
+      {
+        $push: {
+          likes: foundUser._id,
+        },
+      },
+      { upsert: true }
+    );
+    const likedBy = await User.findByIdAndUpdate(
+      authUserId,
+      {
+        $push: {
+          userLikes: likedPost._id,
+        },
+      },
+      { upsert: true }
+    );
+    return res.status(200).send({
+      success: true,
+      message: "Post liked successfully.",
+      details: null,
+    });
+  } catch (error) {
+    console.log(error.message);
+    return res
+      .send({
+        success: false,
+        message: "Something went wrong while liking the post.",
+        details: null,
+      })
+      .status(500);
+  }
+};

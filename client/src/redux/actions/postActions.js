@@ -92,3 +92,13 @@ export const fetch_a_post = (postId) => {
     }
   };
 };
+
+export const like_post = (postId) => {
+  return async (dispatch) => {
+    console.log(postId);
+    const { data } = await axios.post("/post/like", {
+      postId,
+    });
+    console.log(data);
+  };
+};

@@ -3,12 +3,15 @@
   border-radius: 10px;
   overflow: hidden;
   .interaction-cont {
-    > div {
+    > button {
+      background-color: transparent;
+      border: none;
       display: grid;
       grid-template-rows: 1fr 1fr;
       align-items: center;
       justify-content: center;
       text-align: center;
+      cursor: pointer;
       border-radius: 50%;
       svg {
         font-size: 1.4rem;

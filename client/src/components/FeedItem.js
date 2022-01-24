@@ -13,6 +13,8 @@ import { useSelector } from "react-redux";
 import clsx from "clsx";
 import { AiOutlineUserAdd } from "react-icons/ai";
 import { IoCalendarNumberSharp } from "react-icons/io5";
+import { useDispatch } from "react-redux";
+import { like_post } from "redux/actions/postActions";
 const FeedItem = ({
   title,
   tags,
@@ -23,7 +25,11 @@ const FeedItem = ({
   selfMode,
   id,
 }) => {
+  const dispatch = useDispatch();
   const { dark } = useSelector((state) => state.common);
+  const likeHandler = () => {
+    dispatch(like_post(id));
+  };
   return (
     <div
       className={clsx(
@@ -50,21 +56,21 @@ const FeedItem = ({
         </Link>
       </div>
       <div className="card-body interaction-cont py-1 row align-items-center justify-content-center">
-        <div className="col-1">
+        <button className="col-1" role="button" onClick={likeHandler}>
           <BiLike />
           <span>{likes}</span>
-        </div>
-        <div className="col-1">
+        </button>
+        <button className="col-1" role="button">
           <BiComment />
           <span>{comments}</span>
-        </div>
-        <div className="col-1 single-childed">
+        </button>
+        <button className="col-1 single-childed">
           <IoIosShareAlt />
-        </div>
+        </button>
         <div className="col-8"></div>
-        <div className="col-1 single-childed">
+        <button className="col-1 single-childed">
           <MdOutlineBookmarkAdd />
-        </div>
+        </button>
       </div>
       <div className="card-body py-1">
         <div className="row  align-items-center g-2 py-2">
