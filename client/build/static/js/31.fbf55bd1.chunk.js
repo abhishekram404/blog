@@ -1,0 +1,2 @@
+(this.webpackJsonpblog=this.webpackJsonpblog||[]).push([[31],{361:function(n,o,t){"use strict";t.r(o),t.d(o,"default",(function(){return r}));var c=t(27),i=(t(1),t(16)),l=t(2);function r(){var n=Object(i.c)((function(n){return n.common})).dark;return Object(l.jsx)("div",{className:Object(c.a)("following py-4 px-1 p-md-4",n?"following-dark":"following-light"),children:"Following"})}}}]);
+//# sourceMappingURL=31.fbf55bd1.chunk.js.map
