@@ -1,3 +1,5 @@
+import Socket from "utils/Socket";
+
 const { default: axios } = require("axios");
 const {
   FETCH_POST_SUCCESS,
@@ -8,6 +10,7 @@ const {
   FETCH_A_POST_SUCCESS,
   FETCH_A_POST_FAILURE,
   ERROR,
+  UPDATE_POST_VIA_SOCKET,
 } = require("redux/constants");
 
 export const fetch_posts = (skip = 0) => {
@@ -95,10 +98,15 @@ export const fetch_a_post = (postId) => {
 
 export const like_post = (postId) => {
   return async (dispatch) => {
-    console.log(postId);
     const { data } = await axios.post("/post/like", {
       postId,
     });
-    console.log(data);
+  };
+};
+
+export const update_post = (details) => {
+  return {
+    type: UPDATE_POST_VIA_SOCKET,
+    payload: details,
   };
 };

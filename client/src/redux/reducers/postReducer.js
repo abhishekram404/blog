@@ -5,6 +5,7 @@ const {
   FETCH_PROFILE_POST_FAILURE,
   CLEAR_ALL,
   FETCH_A_POST_SUCCESS,
+  UPDATE_POST_VIA_SOCKET,
 } = require("redux/constants");
 
 const postReducer = (
@@ -48,6 +49,17 @@ const postReducer = (
       return {
         ...state,
         visitedPosts: [...state.visitedPosts, action.payload],
+      };
+    case UPDATE_POST_VIA_SOCKET:
+      const postIndex = state.fetchedPosts.findIndex(
+        (post) => post._id === action.payload.post_id
+      );
+      let newArr = [...state.fetchedPosts];
+      newArr[postIndex].likes = action.payload.likes;
+      newArr[postIndex].comments = action.payload.comments;
+      return {
+        ...state,
+        fetchedPosts: newArr,
       };
     default:
       return state;

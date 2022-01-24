@@ -4,17 +4,19 @@ import {
   // MdNotificationAdd,
   MdOutlineBookmarkAdd,
   // MdOutlineBookmarkAdded,
+  MdOutlineThumbUpOffAlt,
+  MdThumbUpAlt,
 } from "react-icons/md";
 import { BiComment, BiLike } from "react-icons/bi";
 import { IoIosShareAlt } from "react-icons/io";
-// import featuredImage from "assets/featured.jpg";
+import { AiFillLike } from "react-icons/ai";
 import "styles/feedItem.scss";
 import { useSelector } from "react-redux";
 import clsx from "clsx";
 import { AiOutlineUserAdd } from "react-icons/ai";
 import { IoCalendarNumberSharp } from "react-icons/io5";
 import { useDispatch } from "react-redux";
-import { like_post } from "redux/actions/postActions";
+import { like_post, update_post } from "redux/actions/postActions";
 import { ERROR } from "redux/constants";
 const FeedItem = ({
   title,
@@ -25,6 +27,7 @@ const FeedItem = ({
   comments,
   selfMode,
   id,
+  isAlreadyLiked,
 }) => {
   const dispatch = useDispatch();
   const { dark, isUserLoggedIn } = useSelector((state) => state.common);
@@ -37,6 +40,7 @@ const FeedItem = ({
     }
     dispatch(like_post(id));
   };
+
   return (
     <div
       className={clsx(
@@ -64,7 +68,7 @@ const FeedItem = ({
       </div>
       <div className="card-body interaction-cont py-1 row align-items-center justify-content-center">
         <button className="col-1" role="button" onClick={likeHandler}>
-          <BiLike />
+          {isAlreadyLiked ? <MdThumbUpAlt /> : <MdOutlineThumbUpOffAlt />}
           <span>{likes}</span>
         </button>
         <button className="col-1" role="button">

@@ -4,8 +4,9 @@ import clsx from "clsx";
 import axios from "axios";
 import { useSelector, useDispatch } from "react-redux";
 import Loading from "./Loading";
-import { fetch_posts } from "redux/actions/postActions";
+import { fetch_posts, update_post } from "redux/actions/postActions";
 import { fetch_user_info } from "redux/actions/userActions";
+import Socket from "utils/Socket";
 const FeedItem = React.lazy(() => import("./FeedItem"));
 const HomeSidebar = React.lazy(() => import("./HomeSidebar"));
 export default function Homepage() {
@@ -16,6 +17,12 @@ export default function Homepage() {
   useEffect(() => {
     dispatch(fetch_posts(fetchedPosts.length));
     dispatch(fetch_user_info());
+  }, []);
+
+  useEffect(() => {
+    Socket.on("post-like", (postDetails) => {
+      dispatch(update_post(postDetails));
+    });
   }, []);
 
   return (
@@ -30,7 +37,7 @@ export default function Homepage() {
           <div className="col-12 feed col-md-9">
             <h2 className="page-title">Feed</h2>
             <Suspense fallback={<Loading />}>
-              {fetchedPosts && fetchedPosts.length > 0 ? (
+              {fetchedPosts && user && fetchedPosts.length > 0 ? (
                 fetchedPosts.map((post) => (
                   <FeedItem
                     title={post.title}
@@ -41,6 +48,7 @@ export default function Homepage() {
                     author={post.author}
                     key={post._id}
                     id={post._id}
+                    isAlreadyLiked={post.likes.includes(user._id)}
                   />
                 ))
               ) : (

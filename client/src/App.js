@@ -19,6 +19,7 @@ import {
 import Cookies from "js-cookie";
 import Loading from "components/Loading";
 import Error404 from "components/Error404";
+import Socket from "utils/Socket";
 const Homepage = React.lazy(() => import("components/Homepage"));
 const Post = React.lazy(() => import("components/Post"));
 const Register = React.lazy(() => import("components/Register"));
@@ -73,6 +74,10 @@ function App() {
   }, [type, message]);
 
   const isProduction = process.env.REACT_APP_NODE_ENV === "production";
+
+  useEffect(() => {
+    Socket.emit("connection");
+  }, []);
 
   return (
     <Router>
