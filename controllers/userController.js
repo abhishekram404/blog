@@ -173,7 +173,6 @@ module.exports.checkUsernameAvailability = async (req, res) => {
 module.exports.fetchUserInfo = async (req, res) => {
   try {
     const { authUserId } = await req;
-    console.log(authUserId);
     if (!authUserId) {
       return res.send({
         success: false,
@@ -190,7 +189,6 @@ module.exports.fetchUserInfo = async (req, res) => {
       details: u,
     });
   } catch (error) {
-    console.log(error.message);
     return res.send({
       success: false,
       message: "Failed to fetch user info.",

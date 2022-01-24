@@ -9,7 +9,6 @@ const { default: axios } = require("axios");
 export const fetch_user_info = () => {
   return async (dispatch) => {
     const { data } = await axios.get("/user/fetchUserInfo");
-    console.log(data);
     const { success, message, details } = await data;
     switch (success) {
       case true:

@@ -8,7 +8,6 @@ const auth = async (req, res, next) => {
         message: "Unauthorized request! Please login again.",
       });
     }
-    console.log(token);
     const decoded = await jwt.verify(token, process.env.JWT_SECRET);
 
     if (!decoded.hasOwnProperty("_id")) {
@@ -20,7 +19,6 @@ const auth = async (req, res, next) => {
     req.authUserId = decoded._id;
     next();
   } catch (error) {
-    console.log(error.message);
     return res.send({
       success: false,
       message: "Authentication failed ! Please login again.",

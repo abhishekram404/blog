@@ -69,14 +69,12 @@ module.exports.fetchHomepagePosts = async (req, res) => {
       // .skip(Number(skip))
       // .limit(3)
       .lean();
-    console.log(posts);
     return res.send({
       success: true,
       message: "Posts fetched successfully",
       details: posts,
     });
   } catch (error) {
-    console.log(error);
     return res.send({
       success: false,
       message: "Something went wrong while fetching posts.",
@@ -102,14 +100,12 @@ module.exports.fetchProfilePosts = async (req, res) => {
       .limit(3)
       .lean();
 
-    console.log(posts);
     return res.send({
       success: true,
       message: "Posts fetched successfully",
       details: posts,
     });
   } catch (error) {
-    console.log(error);
     return res.send({
       success: false,
       message: "Something went wrong while fetching posts.",
@@ -140,9 +136,7 @@ module.exports.fetchAPost = async (req, res) => {
         details: foundPost,
       })
       .status(200);
-    console.log(foundPost);
   } catch (error) {
-    console.log(error);
     return res.send({
       success: false,
       message: "Something went wrong while fetching the post.",

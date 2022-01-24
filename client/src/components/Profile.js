@@ -32,8 +32,6 @@ export default function Profile() {
         profile: user.username,
       })
     );
-    // setSkip(skip + 3);
-    // console.log(skip);
   }, []);
   return (
     <Switch>

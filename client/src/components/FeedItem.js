@@ -44,7 +44,7 @@ const FeedItem = ({
           <p className="card-text post-body">
             {tags &&
               tags.map((tag, index) => {
-                return <span>{`#${tag}`}</span>;
+                return <span key={index}>{`#${tag}`}</span>;
               })}
           </p>
         </Link>

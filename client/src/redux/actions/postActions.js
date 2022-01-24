@@ -16,7 +16,6 @@ export const fetch_posts = (skip = 0) => {
 
     const { success, details } = await data;
 
-    console.log(success, details);
     switch (success) {
       case true:
         return dispatch({
@@ -45,7 +44,6 @@ export const fetch_profile_post = ({ skip, profile }) => {
       },
     });
     const { success, details } = await data;
-    console.log(details);
     switch (success) {
       case true:
         return dispatch({
@@ -68,9 +66,7 @@ export const fetch_profile_post = ({ skip, profile }) => {
 export const fetch_a_post = (postId) => {
   return async (dispatch) => {
     try {
-      console.log(postId);
       const { data } = await axios.get(`/post/fetch?id=${postId}`);
-      console.log(data);
       switch (data.success) {
         case true:
           return dispatch({

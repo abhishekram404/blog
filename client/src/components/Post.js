@@ -27,7 +27,6 @@ export default function Post({ title, body, category, preview = false }) {
   );
 
   const [post] = visitedPosts;
-  console.log(post);
   useEffect(() => {
     if (visitedPosts.some((post) => post._id === id)) {
       return;

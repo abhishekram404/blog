@@ -45,13 +45,6 @@ const postReducer = (
     case FETCH_PROFILE_POST_FAILURE:
       return state;
     case FETCH_A_POST_SUCCESS:
-      // let postAlreadyExists = state.visitedPosts.some(
-      //   (post) => post._id === action.payload._id
-      // );
-      // console.log("Already exists", postAlreadyExists);
-      // if (postAlreadyExists) {
-      //   return;
-      // }
       return {
         ...state,
         visitedPosts: [...state.visitedPosts, action.payload],

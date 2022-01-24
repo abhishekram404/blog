@@ -32,9 +32,7 @@ export default function EditProfile() {
     address: "",
   };
 
-  const handleSubmit = (values) => {
-    console.log(values);
-  };
+  const handleSubmit = (values) => {};
   return (
     <div
       className={clsx(
