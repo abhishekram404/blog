@@ -15,6 +15,7 @@ import { AiOutlineUserAdd } from "react-icons/ai";
 import { IoCalendarNumberSharp } from "react-icons/io5";
 import { useDispatch } from "react-redux";
 import { like_post } from "redux/actions/postActions";
+import { ERROR } from "redux/constants";
 const FeedItem = ({
   title,
   tags,
@@ -26,8 +27,14 @@ const FeedItem = ({
   id,
 }) => {
   const dispatch = useDispatch();
-  const { dark } = useSelector((state) => state.common);
+  const { dark, isUserLoggedIn } = useSelector((state) => state.common);
   const likeHandler = () => {
+    if (!isUserLoggedIn) {
+      return dispatch({
+        type: ERROR,
+        payload: "Please login to access all features.",
+      });
+    }
     dispatch(like_post(id));
   };
   return (
