@@ -72,6 +72,8 @@ function App() {
     }
   }, [type, message]);
 
+  const isProduction = process.env.REACT_APP_NODE_ENV === "production";
+
   return (
     <Router>
       <div className={clsx("app", dark ? "app_dark" : "app_light")}>

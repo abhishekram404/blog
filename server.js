@@ -1,6 +1,7 @@
 const express = require("express");
+const { createServer } = require("http");
+const { Server } = require("socket.io");
 const mongoose = require("mongoose");
-const app = express();
 const userRoutes = require("./routes/userRoutes");
 const postRoutes = require("./routes/postRoutes");
 const bodyParser = require("body-parser");
@@ -8,7 +9,11 @@ const dotenv = require("dotenv");
 const cookieParser = require("cookie-parser");
 const cors = require("cors");
 const path = require("path");
+const Post = require("./models/Post");
+const { postWatcher } = require("./utils/PostWatcher");
 dotenv.config();
+const app = express();
+const httpServer = createServer(app);
 
 const isProduction = process.env.NODE_ENV === "production";
 
@@ -44,9 +49,10 @@ app.use(
 app.use(bodyParser.urlencoded({ extended: true }));
 
 mongoose.connect(
-  isProduction
-    ? `mongodb+srv://blogadmin:${process.env.MONGO_PASS}@blog.vxoiw.mongodb.net/blog?retryWrites=true&w=majority`
-    : process.env.MONGO_URI || "mongodb://localhost:27017/blog",
+  `mongodb+srv://blogadmin:${process.env.MONGO_PASS}@blog.vxoiw.mongodb.net/blog?retryWrites=true&w=majority`,
+  // isProduction
+  //   ? `mongodb+srv://blogadmin:${process.env.MONGO_PASS}@blog.vxoiw.mongodb.net/blog?retryWrites=true&w=majority`
+  //   : process.env.MONGO_URI || "mongodb://localhost:27017/blog",
   (err) => {
     if (err) {
       console.log("🔴 Error connecting to database");
@@ -56,6 +62,21 @@ mongoose.connect(
     console.log("✅  Connected to database");
   }
 );
+
+const io = new Server(httpServer, {
+  ...(!isProduction && {
+    cors: {
+      origin: "http://localhost:3000",
+    },
+  }),
+});
+io.on("connection", (socket) => {
+  console.log("A new client connected.", socket.id);
+
+  socket.emit("message", "Welcome my dear client.");
+});
+
+postWatcher();
 
 if (process.env.NODE_ENV === "production") {
   app.use(express.static(path.join(__dirname, "client", "build")));
@@ -68,7 +89,7 @@ app.use("/api/user", userRoutes);
 app.use("/api/post", postRoutes);
 
 const port = process.env.PORT || 4000;
-app.listen(port, (err) => {
+httpServer.listen(port, (err) => {
   if (err) throw err;
   console.log(`🚀  SERVER STARTED ON PORT ${port}`);
 });
