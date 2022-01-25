@@ -1,12 +1,12 @@
 # blog
+
 ## A blog app being build on MERN stack
 
 This repo is a combination of two other repos([blog-frontend](https://github.com/abhishekram404/blog-frontend) & [blog-api](https://github.com/abhishekram404/blog-api)) which are available on [my github](https://github.com/abhishekram404?tab=repositories).
 
-Deployment link : https://abhishekram404-blog.herokuapp.com/ 
+Deployment link : https://abhishekram404-blog-simple.herokuapp.com/
 
 ### Screenshots
-
 
 ![Screenshot from 2022-01-23 14-23-23](https://user-images.githubusercontent.com/55845306/150671089-a9f19f75-5bbc-49ba-a950-2754608d357d.png)
 
@@ -22,8 +22,8 @@ Deployment link : https://abhishekram404-blog.herokuapp.com/
 ![Screenshot from 2022-01-23 14-25-37](https://user-images.githubusercontent.com/55845306/150671123-0be1c247-152f-455e-8841-5f01260b3321.png)
 ![Screenshot from 2022-01-23 14-25-41](https://user-images.githubusercontent.com/55845306/150671124-e922c7e6-b058-4af0-adfc-ec96841cdfbd.png)
 
+### Responsive
 
-### Responsive 
 ![screencapture-localhost-3000-post-61ec2c1a8c3bb4b7c62acc7d-2022-01-23-14_24_30](https://user-images.githubusercontent.com/55845306/150671442-8e121d62-d43a-4b83-bf4e-55422674e5bb.png)
 ![screencapture-localhost-3000-2022-01-23-14_35_40](https://user-images.githubusercontent.com/55845306/150671444-956fe028-151d-421a-b9bf-063fe1a5ca7c.png)
 ![screencapture-localhost-3000-profile-2022-01-23-14_39_22](https://user-images.githubusercontent.com/55845306/150671462-f7563d78-8127-4ecc-9612-031970a2b564.png)
@@ -36,7 +36,3 @@ Deployment link : https://abhishekram404-blog.herokuapp.com/
 ![screencapture-localhost-3000-login-2022-01-23-14_37_31](https://user-images.githubusercontent.com/55845306/150671525-bef8d190-fec4-48b2-a042-ce1b6eb52715.png)
 ![screencapture-localhost-3000-register-2022-01-23-14_37_54](https://user-images.githubusercontent.com/55845306/150671533-18cfae84-2348-43c8-bac3-f87339814954.png)
 ![screencapture-localhost-3000-register-2022-01-23-14_38_17](https://user-images.githubusercontent.com/55845306/150671540-c51a3e8a-6cfe-4ad3-b127-56687c5592ec.png)
-
-
-
-

@@ -16,7 +16,7 @@ app.use((req, res, next) => {
   res.header(
     "Access-Control-Allow-Origin",
     isProduction
-      ? "https://abhishekram404-blog.herokuapp.com"
+      ? "https://abhishekram404-blog-simple.herokuapp.com"
       : "http://localhost:3000"
   );
   res.header("Access-Control-Allow-Credentials", true);
@@ -27,7 +27,7 @@ app.use((req, res, next) => {
 app.use(
   cors({
     origin: isProduction
-      ? "https://abhishekram404-blog.herokuapp.com"
+      ? "https://abhishekram404-blog-simple.herokuapp.com"
       : "http://localhost:3000",
     credentials: true,
     maxAge: "17280000",

@@ -11,7 +11,7 @@ import AlertTemplate from "react-alert-template-basic";
 const isProduction = process.env.REACT_APP_NODE_ENV === "production";
 
 axios.defaults.baseURL = isProduction
-  ? "https://abhishekram404-blog.herokuapp.com/api/"
+  ? "https://abhishekram404-blog-simple.herokuapp.com/api/"
   : "http://localhost:4000/api/";
 
 axios.defaults.withCredentials = true;

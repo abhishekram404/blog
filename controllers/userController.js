@@ -90,7 +90,7 @@ module.exports.login = async (req, res) => {
       maxAge: 900000000,
       secure: isProduction ? true : false,
       ...(isProduction && {
-        domain: "abhishekram404-blog.herokuapp.com",
+        domain: "abhishekram404-blog-simple.herokuapp.com",
         sameSite: "None",
       }),
     });
@@ -100,7 +100,7 @@ module.exports.login = async (req, res) => {
       secure: isProduction ? true : false,
 
       ...(isProduction && {
-        domain: "abhishekram404-blog.herokuapp.com",
+        domain: "abhishekram404-blog-simple.herokuapp.com",
         sameSite: "None",
       }),
     });
