@@ -1,7 +1,6 @@
 import React, { Suspense, useEffect } from "react";
 import "styles/Homepage.scss";
 import clsx from "clsx";
-import axios from "axios";
 import { useSelector, useDispatch } from "react-redux";
 import Loading from "./Loading";
 import { fetch_posts } from "redux/actions/postActions";
@@ -35,8 +34,6 @@ export default function Homepage() {
                   <FeedItem
                     title={post.title}
                     tags={post.tags}
-                    likes={post.likes.length}
-                    comments={post.comments.length}
                     category={post.category}
                     author={post.author}
                     key={post._id}
@@ -49,7 +46,6 @@ export default function Homepage() {
             </Suspense>
           </div>
 
-          {/* Sidebar is commented for now */}
           {isUserLoggedIn && (
             <div className="col-md-3 sidebar-section p-3 d-none d-md-block">
               Quick links

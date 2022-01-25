@@ -181,7 +181,7 @@ module.exports.fetchUserInfo = async (req, res) => {
     }
     const u = await User.findById(
       authUserId,
-      "name bio address dob username email followers following joined"
+      "name bio address dob username email joined"
     ).lean();
     return res.send({
       success: true,

@@ -4,7 +4,6 @@ import { Link, useLocation } from "react-router-dom";
 import { IoNewspaperOutline, IoSettingsOutline } from "react-icons/io5";
 import { HiOutlineDocument } from "react-icons/hi";
 import { MdOutlineBookmarkBorder } from "react-icons/md";
-import { BsPeople, BsPersonCheck } from "react-icons/bs";
 import clsx from "clsx";
 import { useSelector } from "react-redux";
 import { AiOutlineHome } from "react-icons/ai";
@@ -30,12 +29,6 @@ export default function HomeSidebar() {
         break;
       case "saved":
         setActive("saved");
-        break;
-      case "followers":
-        setActive("followers");
-        break;
-      case "following":
-        setActive("following");
         break;
       case "drafts":
         setActive("drafts");
@@ -99,26 +92,7 @@ export default function HomeSidebar() {
             Saved
           </Link>
         </li>
-        <li
-          className={clsx("side-nav-item", active === "followers" && "active")}
-        >
-          <Link to="/profile/followers">
-            <span>
-              <BsPeople />
-            </span>
-            Followers
-          </Link>
-        </li>
-        <li
-          className={clsx("side-nav-item", active === "following" && "active")}
-        >
-          <Link to="/profile/following">
-            <span>
-              <BsPersonCheck />
-            </span>
-            Following
-          </Link>
-        </li>
+
         <hr />
 
         <li

@@ -16,8 +16,6 @@ const Error404 = React.lazy(() => import("./Error404"));
 const Posts = React.lazy(() => import("./Posts"));
 const Drafts = React.lazy(() => import("./Drafts"));
 const Saved = React.lazy(() => import("./Saved"));
-const Followers = React.lazy(() => import("./Followers"));
-const Following = React.lazy(() => import("./Following"));
 const HomeSidebar = React.lazy(() => import("./HomeSidebar"));
 export default function Profile() {
   const dispatch = useDispatch();
@@ -68,13 +66,7 @@ export default function Profile() {
                           </Link>
                         )}
                       </div>
-                      <div className="connections">
-                        <FiUsers className="icon" /> &nbsp;
-                        <b>{user.followers ? user.followers.length : 0}</b>{" "}
-                        &nbsp; followers &nbsp; &bull; &nbsp;
-                        <b>{user.following ? user.following.length : 0}</b>
-                        &nbsp; following
-                      </div>
+
                       <div className="address">
                         <IoLocationOutline className="icon" />
                         {user.address ? (
@@ -108,9 +100,6 @@ export default function Profile() {
                           return (
                             <FeedItem
                               title={post.title}
-                              content={post.content}
-                              likes={post.likes.length}
-                              comments={post.comments.length}
                               category={post.category}
                               author={post.author}
                               key={post._id}
@@ -142,16 +131,6 @@ export default function Profile() {
               <Route path={`${url}/saved`}>
                 <Suspense fallback={<Loading />}>
                   <Saved />
-                </Suspense>
-              </Route>
-              <Route path={`${url}/followers`}>
-                <Suspense fallback={<Loading />}>
-                  <Followers />
-                </Suspense>
-              </Route>
-              <Route path={`${url}/following`}>
-                <Suspense fallback={<Loading />}>
-                  <Following />
                 </Suspense>
               </Route>
             </div>

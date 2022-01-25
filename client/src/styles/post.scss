@@ -36,65 +36,6 @@
         font-family: "Lato", sans-serif;
       }
     }
-    .interaction-row {
-      display: flex;
-      align-items: center;
-      .interaction-btn {
-        display: grid;
-        place-items: center;
-        grid-template-rows: 1fr 20px;
-        // padding: 20px;
-        font-size: 2rem;
-        margin: 20px 60px 20px 0;
-        cursor: pointer;
-        span {
-          font-size: 0.85rem;
-        }
-      }
-    }
-    .comments-section {
-      h4 {
-        font-family: "Poppins", sans-serif;
-        color: #1e1e1e;
-      }
-      form {
-        textarea {
-          font-family: "Poppins", sans-serif;
-          color: #2e2e2e;
-        }
-      }
-      .comment {
-        &:not(:last-child) {
-          margin-bottom: 30px;
-        }
-
-        display: grid;
-        grid-template-columns: minmax(50px, 80px) minmax(200px, 500px);
-        align-items: start;
-        .avatar {
-          display: flex;
-          justify-content: center;
-          align-items: center;
-          img {
-            width: 50%;
-          }
-        }
-        .comment-details {
-          font-family: "Lato", sans-serif;
-          .comment-user {
-            font-size: 1.1rem;
-            font-weight: 400;
-            font-family: "Poppins", sans-serif;
-          }
-          .comment-text {
-            font-size: 1rem;
-          }
-          .comment-time {
-            font-family: "Lato", sans-serif;
-          }
-        }
-      }
-    }
   }
 }
 
@@ -116,38 +57,6 @@
       }
       .post-body {
         color: $textHeading;
-      }
-    }
-    .interaction-row {
-      .interaction-btn {
-        color: $textHeading !important;
-      }
-    }
-    .comments-section {
-      > h4 {
-        color: $textHeading;
-      }
-      form {
-        textarea {
-          background-color: $grey;
-          border-color: #000;
-          &::placeholder {
-            color: $textGrey;
-          }
-        }
-      }
-      .comment {
-        .comment-details {
-          .comment-user {
-            color: $textHeading;
-          }
-          .comment-text {
-            color: $textGrey;
-          }
-          .comment-time {
-            color: $textGrey;
-          }
-        }
       }
     }
   }
@@ -185,27 +94,6 @@
           .title-row {
             .post-title {
               font-size: 1.7rem;
-            }
-          }
-        }
-      }
-      .comments-section {
-        .comment {
-          grid-template-columns: minmax(30px, 60px) minmax(200px, 500px);
-          .avatar {
-            img {
-              width: 60%;
-            }
-          }
-          .comment-details {
-            .comment-user {
-              font-size: 1rem;
-            }
-            .comment-text {
-              font-size: 0.95rem;
-            }
-            .comment-time {
-              font-size: 0.9rem;
             }
           }
         }
