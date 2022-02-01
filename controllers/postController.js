@@ -93,8 +93,7 @@ module.exports.fetchProfilePosts = async (req, res) => {
         "author.authorUsername": profile,
       },
       "title tags category author"
-    )
-    .lean();
+    ).lean();
 
     console.log(posts);
     return res.send({
