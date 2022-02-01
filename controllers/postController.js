@@ -1,5 +1,6 @@
 const Post = require("../models/Post");
 const User = require("../models/User");
+const ObjectId = require("mongoose").Types.ObjectId;
 module.exports.createPost = async (req, res) => {
   try {
     const {
@@ -90,7 +91,7 @@ module.exports.fetchProfilePosts = async (req, res) => {
     const posts = await Post.find(
       {
         published: true,
-        "author.authorUsername": profile,
+        "author.authorId": new ObjectId(profile),
       },
       "title tags category author"
     ).lean();
