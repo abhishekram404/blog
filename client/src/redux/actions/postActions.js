@@ -8,31 +8,6 @@ const {
   ERROR,
 } = require("redux/constants");
 
-export const fetch_posts = (skip = 0) => {
-  return async (dispatch) => {
-    const { data } = await axios.get("/post/fetchHomepagePosts?skip=" + skip);
-
-    const { success, details } = await data;
-
-    switch (success) {
-      case true:
-        return dispatch({
-          type: FETCH_POST_SUCCESS,
-          payload: details,
-        });
-      case false:
-        return dispatch({
-          type: FETCH_POST_FAILURE,
-        });
-      default:
-        return dispatch({
-          type: INFO,
-          payload: "Something went wrong while fetching the posts.",
-        });
-    }
-  };
-};
-
 export const fetch_a_post = (postId) => {
   return async (dispatch) => {
     try {

@@ -3,20 +3,31 @@ import "styles/Homepage.scss";
 import clsx from "clsx";
 import { useSelector, useDispatch } from "react-redux";
 import Loading from "./Loading";
-import { fetch_posts } from "redux/actions/postActions";
-import { fetch_user_info } from "redux/actions/userActions";
+import { useQuery } from "react-query";
+import axios from "axios";
+import { ERROR } from "redux/constants";
 const FeedItem = React.lazy(() => import("./FeedItem"));
 const HomeSidebar = React.lazy(() => import("./HomeSidebar"));
 export default function Homepage() {
   const dispatch = useDispatch();
   const { dark, isUserLoggedIn } = useSelector((state) => state.common);
-  const { fetchedPosts } = useSelector((state) => state.post);
   const { user } = useSelector((state) => state.user);
-  useEffect(() => {
-    dispatch(fetch_posts(fetchedPosts.length));
-    dispatch(fetch_user_info());
-  }, []);
+  // useEffect(() => {
+  //   dispatch(fetch_posts(fetchedPosts.length));
+  //   dispatch(fetch_user_info());
+  // }, []);
 
+  const { isLoading, data, isError } = useQuery("homepagePosts", () =>
+    axios.get("/post/fetchHomepagePosts")
+  );
+  if (isError) {
+    dispatch({
+      type: ERROR,
+      payload: "Something went wrong while fetching the posts.",
+    });
+  }
+
+  if (isLoading) return <Loading />;
   return (
     <div
       className={clsx(
@@ -29,8 +40,8 @@ export default function Homepage() {
           <div className="col-12 feed col-md-9">
             <h2 className="page-title">Feed</h2>
             <Suspense fallback={<Loading />}>
-              {fetchedPosts && fetchedPosts.length > 0 ? (
-                fetchedPosts.map((post) => (
+              {data.data.details.length > 0 ? (
+                data.data.details.map((post) => (
                   <FeedItem
                     title={post.title}
                     tags={post.tags}
