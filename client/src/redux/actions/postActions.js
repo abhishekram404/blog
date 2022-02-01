@@ -1,10 +1,8 @@
 const { default: axios } = require("axios");
 const {
-  FETCH_POST_SUCCESS,
   FETCH_POST_FAILURE,
   INFO,
   FETCH_A_POST_SUCCESS,
-  FETCH_A_POST_FAILURE,
   ERROR,
 } = require("redux/constants");
 
