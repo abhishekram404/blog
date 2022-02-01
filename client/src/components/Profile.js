@@ -10,6 +10,7 @@ import moment from "moment";
 import { useQuery } from "react-query";
 import axios from "axios";
 import { ERROR } from "redux/constants";
+import Cookies from "js-cookie";
 const EditProfile = React.lazy(() => import("./EditProfile"));
 const FeedItem = React.lazy(() => import("./FeedItem"));
 const Error404 = React.lazy(() => import("./Error404"));
@@ -20,28 +21,37 @@ const HomeSidebar = React.lazy(() => import("./HomeSidebar"));
 export default function Profile() {
   const dispatch = useDispatch();
   const { dark } = useSelector((state) => state.common);
-  const { user } = useSelector((state) => state.user);
-  const [profilePosts, setProfilePosts] = useState([]);
-  // const { profilePosts } = useSelector((state) => state.post);
+  const ownId = Cookies.get("userId");
   const { url } = useRouteMatch();
-  const query = useQuery(
-    "profilePosts",
-    () =>
-      axios.get(`/post/fetchProfilePosts`, {
-        params: {
-          // skip: profilePosts.length,
-          profile: user.username,
-        },
-      }),
-    {
-      onSuccess: ({ data }) => setProfilePosts(data.details),
-      onError: () =>
-        dispatch({
-          type: ERROR,
-          payload: "Failed to fetch profile posts.",
-        }),
-    }
+  const {
+    isLoading: profilePostsLoading,
+    data: profilePosts,
+    isError: profilePostsError,
+  } = useQuery("profilePosts", () =>
+    axios.get(`/post/fetchProfilePosts`, {
+      params: {
+        // skip: profilePosts.length,
+        profile: ownId,
+      },
+    })
   );
+
+  const {
+    isLoading: userInfoLoading,
+    isError: userInfoError,
+    data: user,
+  } = useQuery("userData", () => axios.get("/user/fetchUserInfo"));
+
+  if (profilePostsError) {
+    dispatch({
+      type: ERROR,
+      payload: "Failed to fetch profile posts.",
+    });
+  }
+
+  if (userInfoLoading) {
+    return <Loading />;
+  }
 
   return (
     <Switch>
@@ -65,14 +75,12 @@ export default function Profile() {
                     </div>
                     <br />
                     <div className="details-section">
-                      <h3>{user.name ? user.name : "No name"}</h3>
+                      <h3>{user.data.details.name ?? "No name"}</h3>
                       <div className="username">
-                        {user.username ? `@${user.username}` : "No username"}
+                        @{user.data.details.username}
                       </div>
                       <div className="bio">
-                        {user.bio ? (
-                          user.bio
-                        ) : (
+                        {user.data.details.bio ?? (
                           <Link to="/edit" className="btn-link">
                             Add bio
                           </Link>
@@ -81,19 +89,22 @@ export default function Profile() {
 
                       <div className="address">
                         <IoLocationOutline className="icon" />
-                        {user.address ? (
-                          `Lives in ${user.address}`
+                        {user.data.details.address ? (
+                          `Lives in ${user.data.details.address}`
                         ) : (
                           <Link to={`${url}/edit`} className="btn-link">
                             Add address
                           </Link>
                         )}
                       </div>
-                      {user?.joined ? (
+                      {user.data.details?.joined ? (
                         <div className="joined">
                           <AiOutlineStar className="icon" /> Joined &nbsp;
-                          {moment(user.joined).startOf("min").fromNow()}&nbsp; (
-                          {moment(user.joined).format("ll")})
+                          {moment(user.data.details.joined)
+                            .startOf("min")
+                            .fromNow()}
+                          &nbsp; (
+                          {moment(user.data.details.joined).format("ll")})
                         </div>
                       ) : null}
                       <Link
@@ -106,15 +117,18 @@ export default function Profile() {
                   </div>
                   <div className=" profile-feed-section  p-3">
                     <h4>My posts</h4>
+                    {profilePostsLoading && <Loading />}
                     <Suspense fallback={<Loading />}>
-                      {profilePosts && profilePosts.length > 0 ? (
-                        profilePosts.map((post) => {
+                      {!profilePostsLoading &&
+                      profilePosts.data.details.length > 0 ? (
+                        profilePosts.data.details.map((post) => {
                           return (
                             <FeedItem
                               title={post.title}
                               category={post.category}
                               author={post.author}
                               key={post._id}
+                              id={post._id}
                             />
                           );
                         })

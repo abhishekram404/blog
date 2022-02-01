@@ -32,7 +32,7 @@ export default function Navbar() {
     };
   }, []);
 
-  const { isLoading, data } = useQuery("userData", () =>
+  const { isLoading, data, isError } = useQuery("userData", () =>
     axios.get("/user/fetchUserInfo?fields=name")
   );
 
@@ -77,9 +77,9 @@ export default function Navbar() {
                       alt=""
                     />
                     <span>
-                      {isLoading
-                        ? "Loading"
-                        : data.data.details.name.split(" ")[0]}
+                      {!isLoading && !isError
+                        ? data.data.details.name.split(" ")[0]
+                        : "Loading"}
                     </span>
                   </Link>
                 </li>
