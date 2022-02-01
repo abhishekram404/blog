@@ -1,8 +1,6 @@
 const {
   FETCH_POST_SUCCESS,
   FETCH_POST_FAILURE,
-  FETCH_PROFILE_POST_SUCCESS,
-  FETCH_PROFILE_POST_FAILURE,
   CLEAR_ALL,
   FETCH_A_POST_SUCCESS,
 } = require("redux/constants");
@@ -10,7 +8,6 @@ const {
 const postReducer = (
   state = {
     fetchedPosts: [],
-    profilePosts: [],
     userPosts: [],
     visitedPosts: [],
   },
@@ -34,16 +31,7 @@ const postReducer = (
       };
     case FETCH_POST_FAILURE:
       return state;
-    case FETCH_PROFILE_POST_SUCCESS:
-      return {
-        ...state,
-        profilePosts: [
-          // ...state.profilePosts,
-          ...action.payload,
-        ],
-      };
-    case FETCH_PROFILE_POST_FAILURE:
-      return state;
+
     case FETCH_A_POST_SUCCESS:
       return {
         ...state,

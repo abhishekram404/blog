@@ -86,20 +86,16 @@ module.exports.fetchHomepagePosts = async (req, res) => {
 module.exports.fetchProfilePosts = async (req, res) => {
   try {
     const { skip, profile } = await req.query;
+    console.log(profile);
     const posts = await Post.find(
       {
         published: true,
-        // author: {
-        //   authorUsername: profile,
-        // },
+        "author.authorUsername": profile,
       },
       "title tags category author"
-    )
-      .sort({ _id: -1 })
-      .skip(skip ?? 0)
-      .limit(3)
-      .lean();
+    ).lean();
 
+    console.log(posts);
     return res.send({
       success: true,
       message: "Posts fetched successfully",

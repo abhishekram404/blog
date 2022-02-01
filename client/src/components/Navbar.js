@@ -6,12 +6,12 @@ import { MdDarkMode, MdLightMode } from "react-icons/md";
 import { useDispatch, useSelector } from "react-redux";
 import { logout, toggle_dark_mode } from "redux/actions/commonActions";
 import { HiOutlineMenuAlt4 } from "react-icons/hi";
-import Skeleton from "react-loading-skeleton";
-import "react-loading-skeleton/dist/skeleton.css";
+import { useQuery } from "react-query";
+import axios from "axios";
 export default function Navbar() {
   const dispatch = useDispatch();
   const { dark, isUserLoggedIn } = useSelector((state) => state.common);
-  const { user } = useSelector((state) => state.user);
+  // const { user } = useSelector((state) => state.user);
   const [navExpanded, setNavExpanded] = useState(false);
 
   const resize = () => {
@@ -31,6 +31,11 @@ export default function Navbar() {
       window.removeEventListener("resize", null);
     };
   }, []);
+
+  const { isLoading, data } = useQuery("userData", () =>
+    axios.get("/user/fetchUserInfo?fields=name")
+  );
+
   return (
     <div
       className={clsx(
@@ -71,7 +76,11 @@ export default function Navbar() {
                       src="https://avatars.dicebear.com/api/male/john.svg?mood[]=happy"
                       alt=""
                     />
-                    <span>{user?.name ? user.name.split(" ")[0] : null}</span>
+                    <span>
+                      {isLoading
+                        ? "Loading"
+                        : data.data.details.name.split(" ")[0]}
+                    </span>
                   </Link>
                 </li>
                 <li

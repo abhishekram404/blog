@@ -7,12 +7,17 @@ import { MdOutlineBookmarkBorder } from "react-icons/md";
 import clsx from "clsx";
 import { useSelector } from "react-redux";
 import { AiOutlineHome } from "react-icons/ai";
+import { useQuery } from "react-query";
+import axios from "axios";
+import Loading from "./Loading";
 export default function HomeSidebar() {
   const location = useLocation();
   const { dark } = useSelector((state) => state.common);
-  const { user } = useSelector((state) => state.user);
-  const [active, setActive] = useState("");
 
+  const [active, setActive] = useState("");
+  const { isLoading, data } = useQuery("userInfo", () =>
+    axios.get("/user/fetchUserInfo?fields=name")
+  );
   const p =
     location.pathname.split("/")[location.pathname.split("/").length - 1];
 
@@ -41,6 +46,7 @@ export default function HomeSidebar() {
         break;
     }
   });
+  if (isLoading) return <Loading />;
 
   return (
     <div
@@ -56,7 +62,9 @@ export default function HomeSidebar() {
               src="https://avatars.dicebear.com/api/male/john.svg?mood[]=happy"
               alt=""
             />
-            {user?.name && <span>{user.name.split(" ")[0]} </span>}
+            {data.data.details.name && (
+              <span>{data.data.details.name.split(" ")[0]} </span>
+            )}
           </Link>
         </li>
         <li className={clsx("side-nav-item", active === "" && "active")}>

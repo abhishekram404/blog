@@ -1,15 +1,15 @@
-import React, { Suspense, useEffect, useRef, useState } from "react";
+import React, { Suspense, useState } from "react";
 import clsx from "clsx";
 import { useSelector, useDispatch } from "react-redux";
-import { FiUsers } from "react-icons/fi";
 import { IoLocationOutline } from "react-icons/io5";
 import "styles/profile.scss";
 import { AiOutlineStar } from "react-icons/ai";
 import { Switch, Route, Link, useRouteMatch } from "react-router-dom";
 import Loading from "./Loading";
 import moment from "moment";
-import { fetch_profile_post } from "redux/actions/postActions";
-
+import { useQuery } from "react-query";
+import axios from "axios";
+import { ERROR } from "redux/constants";
 const EditProfile = React.lazy(() => import("./EditProfile"));
 const FeedItem = React.lazy(() => import("./FeedItem"));
 const Error404 = React.lazy(() => import("./Error404"));
@@ -21,16 +21,28 @@ export default function Profile() {
   const dispatch = useDispatch();
   const { dark } = useSelector((state) => state.common);
   const { user } = useSelector((state) => state.user);
-  const { profilePosts } = useSelector((state) => state.post);
+  const [profilePosts, setProfilePosts] = useState([]);
+  // const { profilePosts } = useSelector((state) => state.post);
   const { url } = useRouteMatch();
-  useEffect(() => {
-    dispatch(
-      fetch_profile_post({
-        skip: profilePosts.length,
-        profile: user.username,
-      })
-    );
-  }, []);
+  const query = useQuery(
+    "profilePosts",
+    () =>
+      axios.get(`/post/fetchProfilePosts`, {
+        params: {
+          // skip: profilePosts.length,
+          profile: user.username,
+        },
+      }),
+    {
+      onSuccess: ({ data }) => setProfilePosts(data.details),
+      onError: () =>
+        dispatch({
+          type: ERROR,
+          payload: "Failed to fetch profile posts.",
+        }),
+    }
+  );
+
   return (
     <Switch>
       <div
