@@ -12,7 +12,7 @@ import {
   SUCCESS,
 } from "redux/constants";
 import { Redirect } from "react-router";
-
+import { useMutation } from "react-query";
 export default function Login() {
   const [isSubmitting, setSubmitting] = useState(false);
 
@@ -24,28 +24,32 @@ export default function Login() {
   });
 
   const initialValues = { email: "", password: "" };
-  const handleSubmit = async (values) => {
-    try {
-      setSubmitting(true);
-      const { data } = await axios.post("/user/login", values);
-      setSubmitting(false);
-
-      switch (data.success) {
-        case true:
-          dispatch({ type: AUTHENTICATED });
-          return dispatch({ type: SUCCESS, payload: data.message });
-        case false:
-          dispatch({ type: NOT_AUTHENTICATED });
-          return dispatch({ type: ERROR, payload: data.message });
-        default:
-          dispatch({ type: NOT_AUTHENTICATED });
-          return dispatch({ type: ERROR, payload: "Something went wrong!" });
-      }
-    } catch (error) {
-      setSubmitting(false);
-      dispatch({ type: NOT_AUTHENTICATED });
-      dispatch({ type: ERROR, payload: error.response.data.message });
+  const loginMutation = useMutation(
+    async (v) => await axios.post("/user/login", v),
+    {
+      onSuccess: ({ data }) => {
+        console.log(data);
+        setSubmitting(false);
+        dispatch({ type: AUTHENTICATED });
+        return dispatch({
+          type: SUCCESS,
+          payload: data.message,
+        });
+      },
+      onError: (error) => {
+        console.log(error);
+        setSubmitting(false);
+        dispatch({ type: NOT_AUTHENTICATED });
+        return dispatch({
+          type: ERROR,
+          payload: error.response.data.message,
+        });
+      },
     }
+  );
+  const handleSubmit = async (values) => {
+    setSubmitting(true);
+    await loginMutation.mutateAsync(values);
   };
 
   if (isUserLoggedIn) {
