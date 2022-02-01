@@ -12,10 +12,6 @@ export default function Homepage() {
   const dispatch = useDispatch();
   const { dark, isUserLoggedIn } = useSelector((state) => state.common);
   const { user } = useSelector((state) => state.user);
-  // useEffect(() => {
-  //   dispatch(fetch_posts(fetchedPosts.length));
-  //   dispatch(fetch_user_info());
-  // }, []);
 
   const { isLoading, data, isError } = useQuery("homepagePosts", () =>
     axios.get("/post/fetchHomepagePosts")
