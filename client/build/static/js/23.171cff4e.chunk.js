@@ -1,0 +1,2 @@
+(this.webpackJsonpblog=this.webpackJsonpblog||[]).push([[23],{359:function(e,t,c){"use strict";c.r(t),c.d(t,"default",(function(){return s}));var n=c(22),a=(c(1),c(14)),r=c(4);function s(){var e=Object(a.c)((function(e){return e.common})).dark;return Object(r.jsx)("div",{className:Object(n.a)("saved",e?"saved-dark":"saved-light"),children:Object(r.jsx)("h3",{children:"Saved"})})}}}]);
+//# sourceMappingURL=23.171cff4e.chunk.js.map
