@@ -90,7 +90,6 @@ module.exports.fetchHomepagePosts = async (req, res) => {
 module.exports.fetchProfilePosts = async (req, res) => {
   try {
     const { skip, profile } = await req.query;
-    console.log(profile);
     const posts = await Post.find(
       {
         published: true,
@@ -99,7 +98,6 @@ module.exports.fetchProfilePosts = async (req, res) => {
       "title tags category author"
     ).lean();
 
-    console.log(posts);
     return res.send({
       success: true,
       message: "Posts fetched successfully",

@@ -12,14 +12,17 @@ const userSchema = new mongoose.Schema(
       type: String,
       required: false,
       maxlength: 300,
+      default: "",
     },
     address: {
       type: String,
       required: false,
+      default: "",
     },
     dob: {
       type: Date,
       required: false,
+      default: "",
     },
     username: {
       type: String,

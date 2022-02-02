@@ -80,7 +80,9 @@ export default function Profile() {
                         @{user.data.details.username}
                       </div>
                       <div className="bio">
-                        {user.data.details.bio ?? (
+                        {user.data.details.bio ? (
+                          user.data.details.bio
+                        ) : (
                           <Link to={`${url}/edit`} className="btn-link">
                             Add bio
                           </Link>

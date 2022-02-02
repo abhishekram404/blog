@@ -1,5 +1,6 @@
 const User = require("../models/User");
 const registerValidator = require("../middlewares/registerValidator");
+const updateValidator = require("../middlewares/updateValidator");
 const bcrypt = require("bcrypt");
 
 module.exports.register = async (req, res) => {
@@ -94,7 +95,6 @@ module.exports.login = async (req, res) => {
         sameSite: "None",
       }),
     });
-    console.log(foundUser._id.toString());
     res.cookie("userId", foundUser._id.toString(), {
       httpOnly: false,
       maxAge: 900000000,
@@ -186,11 +186,6 @@ module.exports.checkUsernameAvailability = async (req, res) => {
 module.exports.fetchUserInfo = async (req, res) => {
   try {
     const { authUserId } = await req;
-    // let { fields } = await req.query;
-    // if (fields) {
-    //   fields = fields.split("|").join(" ");
-    // }
-    // console.log(fields);
 
     if (!authUserId) {
       return res.send({
@@ -198,10 +193,9 @@ module.exports.fetchUserInfo = async (req, res) => {
         message: "Unauthorized request!",
       });
     }
-    const u = await User.findById(
-      authUserId
-      // "name bio address dob username email joined"
-    ).lean();
+    const u = await User.findById(authUserId)
+      .select("name email username bio dob address")
+      .lean();
     return res.send({
       success: true,
       message: "Fetch user info successful.",
@@ -230,16 +224,40 @@ module.exports.updateProfile = async (req, res) => {
         details: null,
       });
     }
-    // update validator
-    //  const { error, value } = await registerValidator(req.body);
-    // if (error) {
-    // return res.status(400).json({
-    // success: false,
-    // message: error.details[0].message,
-    // });
-    // }
+    const { error, value } = await updateValidator(req.body);
 
-    // const {}
+    if (error) {
+      return res.status(400).json({
+        success: false,
+        message: error.details[0].message,
+      });
+    }
+
+    const { name, username, bio, email, dob, address } = await value;
+
+    const updatedUser = await User.findByIdAndUpdate(
+      authUserId,
+      {
+        name,
+        username,
+        bio,
+        email,
+        dob,
+        address,
+      },
+      {
+        upsert: true,
+        new: true,
+      }
+    ).select("name username email bio dob address");
+
+    res.status(200).send({
+      success: true,
+      message: "Profile information updated successfully.",
+      details: updatedUser,
+    });
+
+    console.log(value);
   } catch (error) {
     console.log(error.message);
     return res.status(500).send({
