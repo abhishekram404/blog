@@ -129,18 +129,64 @@ module.exports.login = async (req, res) => {
 
 module.exports.logout = async (req, res) => {
   try {
-    res.clearCookie("isUserLoggedIn");
-    res.clearCookie("jwt");
-    res.clearCookie("userId");
+    res.clearCookie("isUserLoggedIn", {
+      httpOnly: false,
+      secure: isProduction ? true : false,
+
+      ...(isProduction && {
+        domain: "abhishekram404-blog-simple.herokuapp.com",
+        sameSite: "None",
+      }),
+    });
+    res.clearCookie("jwt", {
+      httpOnly: true,
+      secure: isProduction ? true : false,
+      ...(isProduction && {
+        domain: "abhishekram404-blog-simple.herokuapp.com",
+        sameSite: "None",
+      }),
+    });
+    res.clearCookie("userId", {
+      httpOnly: false,
+      secure: isProduction ? true : false,
+
+      ...(isProduction && {
+        domain: "abhishekram404-blog-simple.herokuapp.com",
+        sameSite: "None",
+      }),
+    });
     return res.status(200).send({
       success: true,
       message: "Logged out successfully",
       details: null,
     });
   } catch (error) {
-    res.clearCookie("isUserLoggedIn");
-    res.clearCookie("userId");
-    res.clearCookie("jwt");
+    res.clearCookie("isUserLoggedIn", {
+      httpOnly: false,
+      secure: isProduction ? true : false,
+
+      ...(isProduction && {
+        domain: "abhishekram404-blog-simple.herokuapp.com",
+        sameSite: "None",
+      }),
+    });
+    res.clearCookie("userId", {
+      httpOnly: false,
+      secure: isProduction ? true : false,
+
+      ...(isProduction && {
+        domain: "abhishekram404-blog-simple.herokuapp.com",
+        sameSite: "None",
+      }),
+    });
+    res.clearCookie("jwt", {
+      httpOnly: true,
+      secure: isProduction ? true : false,
+      ...(isProduction && {
+        domain: "abhishekram404-blog-simple.herokuapp.com",
+        sameSite: "None",
+      }),
+    });
     return res.status(500).send({
       success: false,
       message: "Logged out successfully",
