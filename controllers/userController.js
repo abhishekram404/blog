@@ -218,3 +218,34 @@ module.exports.fetchUserInfo = async (req, res) => {
       .status(500);
   }
 };
+
+module.exports.updateProfile = async (req, res) => {
+  try {
+    const { authUserId } = await req;
+
+    if (!authUserId) {
+      return res.status(400).send({
+        success: false,
+        message: "Authentication failed! Please login again.",
+        details: null,
+      });
+    }
+    // update validator
+    //  const { error, value } = await registerValidator(req.body);
+    // if (error) {
+    // return res.status(400).json({
+    // success: false,
+    // message: error.details[0].message,
+    // });
+    // }
+
+    // const {}
+  } catch (error) {
+    console.log(error.message);
+    return res.status(500).send({
+      success: false,
+      message: "Something went wrong ! Please try again.",
+      details: null,
+    });
+  }
+};

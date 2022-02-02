@@ -40,10 +40,6 @@ export default function EditProfile() {
     () => axios.get("/user/fetchUserInfo")
   );
 
-  if (isLoading) {
-    return <Loading />;
-  }
-
   if (isError) {
     console.log(error.response);
   }
@@ -58,13 +54,16 @@ export default function EditProfile() {
   }
 
   const mutation = useMutation(
-    async (v) => await axios.put("/user/editProfile", v),
-    {}
+    async (v) => await axios.put("/user/editProfile", v)
   );
 
   const handleSubmit = (values) => {
     console.log(values);
   };
+
+  if (isLoading) {
+    return <Loading />;
+  }
   return (
     <div
       className={clsx(
