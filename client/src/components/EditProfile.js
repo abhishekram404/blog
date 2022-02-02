@@ -5,7 +5,7 @@ import { Formik, Form, Field, ErrorMessage } from "formik";
 import "styles/editProfile.scss";
 import * as Yup from "yup";
 import { Link } from "react-router-dom";
-import { useQuery } from "react-query";
+import { useMutation, useQuery } from "react-query";
 import Loading from "./Loading";
 import axios from "axios";
 export default function EditProfile() {
@@ -49,8 +49,18 @@ export default function EditProfile() {
   }
 
   if (isSuccess) {
-    initialValues = data.data.details;
+    Object.keys(data.data.details).map(async (key) => {
+      if (!initialValues.hasOwnProperty(key)) {
+        delete data.data.details[key];
+      }
+    });
+    initialValues = Object.assign({}, initialValues, data.data.details);
   }
+
+  const mutation = useMutation(
+    async (v) => await axios.put("/user/editProfile", v),
+    {}
+  );
 
   const handleSubmit = (values) => {
     console.log(values);
