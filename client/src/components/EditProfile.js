@@ -1,10 +1,13 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import clsx from "clsx";
 import { useSelector } from "react-redux";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import "styles/editProfile.scss";
 import * as Yup from "yup";
 import { Link } from "react-router-dom";
+import { useQuery } from "react-query";
+import Loading from "./Loading";
+import axios from "axios";
 export default function EditProfile() {
   const { dark } = useSelector((state) => state.common);
 
@@ -23,7 +26,7 @@ export default function EditProfile() {
     address: Yup.string(),
   });
 
-  const initialValues = {
+  let initialValues = {
     name: "",
     username: "",
     bio: "",
@@ -32,7 +35,26 @@ export default function EditProfile() {
     address: "",
   };
 
-  const handleSubmit = (values) => {};
+  let { data, isLoading, isError, isSuccess, error } = useQuery(
+    "profileInfo",
+    () => axios.get("/user/fetchUserInfo")
+  );
+
+  if (isLoading) {
+    return <Loading />;
+  }
+
+  if (isError) {
+    console.log(error.response);
+  }
+
+  if (isSuccess) {
+    initialValues = data.data.details;
+  }
+
+  const handleSubmit = (values) => {
+    console.log(values);
+  };
   return (
     <div
       className={clsx(
