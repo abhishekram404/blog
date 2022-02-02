@@ -131,6 +131,7 @@ module.exports.logout = async (req, res) => {
   try {
     res.clearCookie("isUserLoggedIn", {
       httpOnly: false,
+      path: "/",
       secure: isProduction ? true : false,
 
       ...(isProduction && {
@@ -140,6 +141,7 @@ module.exports.logout = async (req, res) => {
     });
     res.clearCookie("jwt", {
       httpOnly: true,
+      path: "/",
       secure: isProduction ? true : false,
       ...(isProduction && {
         domain: "abhishekram404-blog-simple.herokuapp.com",
@@ -148,6 +150,7 @@ module.exports.logout = async (req, res) => {
     });
     res.clearCookie("userId", {
       httpOnly: false,
+      path: "/",
       secure: isProduction ? true : false,
 
       ...(isProduction && {
@@ -163,6 +166,7 @@ module.exports.logout = async (req, res) => {
   } catch (error) {
     res.clearCookie("isUserLoggedIn", {
       httpOnly: false,
+      path: "/",
       secure: isProduction ? true : false,
 
       ...(isProduction && {
@@ -172,6 +176,7 @@ module.exports.logout = async (req, res) => {
     });
     res.clearCookie("userId", {
       httpOnly: false,
+      path: "/",
       secure: isProduction ? true : false,
 
       ...(isProduction && {
@@ -181,6 +186,7 @@ module.exports.logout = async (req, res) => {
     });
     res.clearCookie("jwt", {
       httpOnly: true,
+      path: "/",
       secure: isProduction ? true : false,
       ...(isProduction && {
         domain: "abhishekram404-blog-simple.herokuapp.com",
