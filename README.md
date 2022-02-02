@@ -6,6 +6,8 @@ This repo is a combination of two other repos([blog-frontend](https://github.com
 
 Deployment link : https://abhishekram404-blog-simple.herokuapp.com/
 
+[![wakatime](https://wakatime.com/badge/user/9ef34678-284f-4667-b221-ef57dba725e2/project/0665d35a-6757-49ac-be38-b9844df476fa.svg)](https://wakatime.com/badge/user/9ef34678-284f-4667-b221-ef57dba725e2/project/0665d35a-6757-49ac-be38-b9844df476fa)
+
 ### Screenshots
 
 ![Screenshot from 2022-01-23 14-23-23](https://user-images.githubusercontent.com/55845306/150671089-a9f19f75-5bbc-49ba-a950-2754608d357d.png)
