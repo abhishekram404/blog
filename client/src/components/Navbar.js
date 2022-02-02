@@ -13,7 +13,7 @@ export default function Navbar() {
   const { dark, isUserLoggedIn } = useSelector((state) => state.common);
   // const { user } = useSelector((state) => state.user);
   const [navExpanded, setNavExpanded] = useState(false);
-
+  const [name, setName] = useState("");
   const resize = () => {
     if (window.innerWidth > 576) {
       return setNavExpanded(true);
@@ -31,9 +31,13 @@ export default function Navbar() {
       window.removeEventListener("resize", null);
     };
   }, []);
-
-  const { isLoading, data, isError } = useQuery("userData", () =>
-    axios.get("/user/fetchUserInfo?fields=name")
+  const query = useQuery(
+    "userData",
+    () => axios.get("/user/fetchUserInfo?fields=name"),
+    {
+      onSuccess: ({ data }) => setName(data.details.name),
+      enabled: Boolean(isUserLoggedIn),
+    }
   );
 
   return (
@@ -76,11 +80,7 @@ export default function Navbar() {
                       src="https://avatars.dicebear.com/api/male/john.svg?mood[]=happy"
                       alt=""
                     />
-                    <span>
-                      {!isLoading && !isError
-                        ? data.data.details.name.split(" ")[0]
-                        : "Loading"}
-                    </span>
+                    <span>{name ? name.split(" ")[0] : "Loading"}</span>
                   </Link>
                 </li>
                 <li

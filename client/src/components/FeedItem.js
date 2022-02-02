@@ -50,9 +50,9 @@ const FeedItem = ({
                 />
               </div>
               <div className="col-7 col-sm-7 px-1 px-sm-3 px-md-3 d-flex flex-column">
-                <span className="author-name">{author.authorName}</span>
+                <span className="author-name">{author?.authorName}</span>
                 <small className="author-username">
-                  <Link to="/user/abhishek">@{author.authorUsername}</Link>
+                  <Link to="/user/abhishek">@{author?.authorUsername}</Link>
                 </small>
               </div>
             </>

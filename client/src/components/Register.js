@@ -6,14 +6,17 @@ import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import axios from "axios";
 import { useDispatch } from "react-redux";
-import { ERROR, SUCCESS, ALERT } from "redux/constants";
+import { ERROR, SUCCESS, ALERT, AUTHENTICATED } from "redux/constants";
 import { Redirect } from "react-router";
+import { useHistory } from "react-router-dom";
 import { debounce as db } from "lodash-es";
+import { useQuery, useMutation } from "react-query";
 export default function Register() {
   const dispatch = useDispatch();
   const [isSubmitting, setSubmitting] = useState(false);
   const { dark, isUserLoggedIn } = useSelector((state) => state.common);
   const [usernameAvailable, setUsernameAvailable] = useState(undefined);
+  const history = useHistory();
   const initialValues = {
     name: "",
     username: "",
@@ -45,23 +48,25 @@ export default function Register() {
     ),
   });
 
-  const handleSubmit = async (values) => {
-    try {
-      setSubmitting(true);
-      const { data } = await axios.post("/user/register", values);
-      setSubmitting(false);
-      switch (data.success) {
-        case true:
-          return dispatch({ type: SUCCESS, payload: data.message });
-        case false:
-          return dispatch({ type: ERROR, payload: data.message });
-        default:
-          return dispatch({ type: ERROR, payload: "Something went wrong!" });
-      }
-    } catch (error) {
-      setSubmitting(false);
-      dispatch({ type: ERROR, payload: error.response.data.message });
+  const registerMutation = useMutation(
+    async (v) => await axios.post("/user/register", v),
+    {
+      onSuccess: ({ data }) => {
+        setSubmitting(false);
+        console.log(data);
+        dispatch({ type: SUCCESS, payload: data.message });
+        return history.push("/login");
+      },
+      onError: (error) => {
+        setSubmitting(false);
+        return dispatch({ type: ERROR, payload: error.response.data.message });
+      },
     }
+  );
+
+  const handleSubmit = async (values) => {
+    setSubmitting(true);
+    await registerMutation.mutate(values);
   };
 
   const handleUsernameChange = db(async (e, setStatus) => {

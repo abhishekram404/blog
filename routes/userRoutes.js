@@ -13,4 +13,5 @@ router.get(
   userController.checkUsernameAvailability
 );
 router.get("/fetchUserInfo", auth, userController.fetchUserInfo);
+router.put("/update", auth, userController.updateProfile);
 module.exports = router;

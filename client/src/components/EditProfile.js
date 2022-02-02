@@ -1,13 +1,18 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import clsx from "clsx";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import "styles/editProfile.scss";
 import * as Yup from "yup";
 import { Link } from "react-router-dom";
+import { useMutation, useQuery } from "react-query";
+import Loading from "./Loading";
+import axios from "axios";
+import moment from "moment";
+import { SUCCESS } from "redux/constants";
 export default function EditProfile() {
   const { dark } = useSelector((state) => state.common);
-
+  const dispatch = useDispatch();
   const schema = Yup.object({
     name: Yup.string()
       .min(3, "Name must be at least 3 characters long.")
@@ -23,7 +28,7 @@ export default function EditProfile() {
     address: Yup.string(),
   });
 
-  const initialValues = {
+  let initialValues = {
     name: "",
     username: "",
     bio: "",
@@ -32,7 +37,48 @@ export default function EditProfile() {
     address: "",
   };
 
-  const handleSubmit = (values) => {};
+  let { data, isLoading, isError, isSuccess, error } = useQuery(
+    "profileInfo",
+    () => axios.get("/user/fetchUserInfo")
+  );
+
+  if (isError) {
+    console.log(error.response);
+  }
+
+  if (isSuccess) {
+    Object.keys(data.data.details).map(async (key) => {
+      if (!initialValues.hasOwnProperty(key)) {
+        delete data.data.details[key];
+      }
+    });
+    initialValues = Object.assign({}, initialValues, data.data.details, {
+      dob: data.data.details.dob
+        ? moment(data.data.details.dob).format("YYYY-MM-DD")
+        : "",
+    });
+  }
+
+  const mutation = useMutation(
+    async (v) => await axios.put("/user/update", v),
+    {
+      onSuccess: ({ data }) => {
+        return dispatch({
+          type: SUCCESS,
+          payload: data.message,
+        });
+      },
+      onError: (error) => console.log(error),
+    }
+  );
+
+  const handleSubmit = (values) => {
+    mutation.mutate(values);
+  };
+
+  if (isLoading) {
+    return <Loading />;
+  }
   return (
     <div
       className={clsx(
@@ -107,7 +153,11 @@ export default function EditProfile() {
                 <Link className="btn me-2 cancel-btn" to="/profile">
                   Cancel
                 </Link>
-                <button type="submit" className="btn btn-primary submit-btn">
+                <button
+                  type="submit"
+                  className="btn btn-primary submit-btn"
+                  disabled={!props.isValid}
+                >
                   Update
                 </button>
               </div>
