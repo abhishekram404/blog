@@ -186,10 +186,11 @@ module.exports.checkUsernameAvailability = async (req, res) => {
 module.exports.fetchUserInfo = async (req, res) => {
   try {
     const { authUserId } = await req;
-    let { fields } = await req.query;
-    if (fields) {
-      fields = fields.split("|").join(" ");
-    }
+    // let { fields } = await req.query;
+    // if (fields) {
+    //   fields = fields.split("|").join(" ");
+    // }
+    // console.log(fields);
 
     if (!authUserId) {
       return res.send({
@@ -198,8 +199,7 @@ module.exports.fetchUserInfo = async (req, res) => {
       });
     }
     const u = await User.findById(
-      authUserId,
-      fields && fields
+      authUserId
       // "name bio address dob username email joined"
     ).lean();
     return res.send({

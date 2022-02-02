@@ -5,7 +5,7 @@ import { WithContext as ReactTags } from "react-tag-input";
 import { pascalCase } from "change-case";
 import { useSelector } from "react-redux";
 import { Formik, Form, Field, ErrorMessage } from "formik";
-import { debounce as db } from "lodash";
+import { create, debounce as db } from "lodash";
 import { AiOutlineEye } from "react-icons/ai";
 import { IoCreateOutline } from "react-icons/io5";
 import Loading from "./Loading";
@@ -14,13 +14,27 @@ import axios from "axios";
 import { useDispatch } from "react-redux";
 import { ERROR, INFO, SUCCESS } from "redux/constants";
 import { withRouter, useHistory } from "react-router-dom";
+import { useMutation, useQuery } from "react-query";
 const CKEditor = React.lazy(() => import("react-ckeditor-component"));
 const Post = React.lazy(() => import("./Post"));
 function CreatePost() {
   const dispatch = useDispatch();
   const history = useHistory();
-  const { dark } = useSelector((state) => state.common);
-  const { user } = useSelector((state) => state.user);
+  const { dark, isUserLoggedIn } = useSelector((state) => state.common);
+  const [user, setUser] = useState({});
+
+  let { data } = useQuery(
+    "userData",
+    async () => await axios.get("/user/fetchUserInfo"),
+    {
+      onSuccess: ({ data }) => {
+        console.log(data);
+        setUser(data.details);
+      },
+      enabled: Boolean(isUserLoggedIn),
+    }
+  );
+
   const [tags, setTags] = useState([]);
   const [previewMode, setPreviewMode] = useState(false);
   const [formData, setFormData] = useState({
@@ -62,11 +76,12 @@ function CreatePost() {
     []
   );
 
-  const generatePreviewData = (values) => {
+  const generatePreviewData = async (values) => {
     let tagsList = [];
     tags.forEach((tagObj) => {
       tagsList.push(tagObj.id);
     });
+
     setFormData(
       Object.assign(
         formData,
@@ -81,17 +96,20 @@ function CreatePost() {
     );
   };
 
-  const handleSubmit = async (values, props) => {
-    try {
-      await generatePreviewData(values);
-      const { data } = await axios.post(
-        "/post/create-post?submitType=publish",
-        formData
-      );
+  const createPostMutation = useMutation((v) =>
+    axios.post("/post/create-post?submitType=publish", v)
+  );
 
-      const { success, message } = await data;
-      switch (success) {
-        case true:
+  const createDraftMutation = useMutation((v) =>
+    axios.post("/post/create-post?submitType=draft", v)
+  );
+
+  const handleSubmit = async (values, props) => {
+    await generatePreviewData(values);
+    createPostMutation.mutate(formData, {
+      onSuccess: async ({ data }) => {
+        console.log(await data);
+        if (data.success) {
           props.resetForm();
           setFormData({
             title: "",
@@ -102,40 +120,30 @@ function CreatePost() {
 
           dispatch({
             type: SUCCESS,
-            payload: message,
+            payload: await data?.message,
           });
-
-          history.push("/");
-          return;
-        case false:
-          return dispatch({
-            type: ERROR,
-            payload: message,
-          });
-        default:
-          return dispatch({
-            type: INFO,
-            payload: message,
-          });
-      }
-    } catch (error) {
-      return dispatch({
-        type: ERROR,
-        payload: error?.response?.data.message,
-      });
-    }
+          return history.push("/");
+        }
+        dispatch({
+          type: ERROR,
+          payload: await data?.message,
+        });
+      },
+      onError: (error) => {
+        dispatch({
+          type: ERROR,
+          payload: error.response.data.message,
+        });
+      },
+    });
   };
 
   const handleDraftSubmit = async (props) => {
-    try {
-      await generatePreviewData(props.values);
-      const { data } = await axios.post(
-        "/post/create-post?submitType=draft",
-        formData
-      );
-      const { success, message } = await data;
-      switch (success) {
-        case true:
+    await generatePreviewData(props.values);
+    createDraftMutation.mutate(formData, {
+      onSuccess: async ({ data }) => {
+        console.log(await data);
+        if (data.success) {
           props.resetForm();
           setFormData({
             title: "",
@@ -143,29 +151,26 @@ function CreatePost() {
             tags: [],
             content: "",
           });
+
           dispatch({
             type: SUCCESS,
-            payload: message,
+            payload: await data?.message,
           });
-          history.push("/");
-          return;
-        case false:
-          return dispatch({
-            type: ERROR,
-            payload: message,
-          });
-        default:
-          return dispatch({
-            type: INFO,
-            payload: message,
-          });
-      }
-    } catch (error) {
-      return dispatch({
-        type: ERROR,
-        payload: error?.response?.data.message,
-      });
-    }
+          return history.push("/");
+        }
+        dispatch({
+          type: ERROR,
+          payload: await data?.message,
+        });
+      },
+      onError: (error) => {
+        // console.log(error.response);
+        dispatch({
+          type: ERROR,
+          payload: error.response.data.message,
+        });
+      },
+    });
   };
 
   return (

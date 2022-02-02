@@ -7,7 +7,7 @@ module.exports.createPost = async (req, res) => {
       title,
       tags,
       category,
-      content,
+      content = "",
       authorId,
       authorName,
       authorUsername,
@@ -48,10 +48,13 @@ module.exports.createPost = async (req, res) => {
     );
     res.status(200).send({
       success: true,
-      message: "Post created successfully.",
+      message: `${
+        submitType === "draft " ? "Draft" : "Post"
+      } created successfully.`,
       details: newPost,
     });
   } catch (error) {
+    console.log(error.message);
     return res.status(500).send({
       success: false,
       message: "Error creating new post. Please try again.",
