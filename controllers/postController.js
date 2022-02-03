@@ -96,7 +96,9 @@ module.exports.fetchProfilePosts = async (req, res) => {
         "author.authorId": new ObjectId(profile),
       },
       "title tags category author"
-    ).lean();
+    )
+      .sort({ $natural: -1 })
+      .lean();
 
     return res.send({
       success: true,
@@ -139,6 +141,45 @@ module.exports.fetchAPost = async (req, res) => {
       success: false,
       message: "Something went wrong while fetching the post.",
       details: null,
+    });
+  }
+};
+
+module.exports.deletePost = async (req, res) => {
+  try {
+    const { authUserId } = await req;
+
+    const { postId } = await req.query;
+
+    const foundPost = await Post.findOneAndDelete({
+      _id: postId,
+      "author.authorId": ObjectId(authUserId),
+    });
+
+    if (!foundPost) {
+      return res.status(400).send({
+        success: false,
+        messge:
+          "Uh oh! It looks like you don't have permission to delete this post.",
+      });
+    }
+    const postAuthor = await User.findByIdAndUpdate(ObjectId(authUserId), {
+      $pull: {
+        posts: foundPost._id,
+      },
+    });
+
+    return res.status(200).send({
+      success: true,
+      message: "Post deleted successfully.",
+      details: foundPost,
+    });
+  } catch (error) {
+    console.log(error.message);
+    return res.status(500).send({
+      success: false,
+      message: "Failed to delete the post. Please try again.",
+      details: error,
     });
   }
 };

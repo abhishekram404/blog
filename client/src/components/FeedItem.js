@@ -10,6 +10,7 @@ const FeedItem = ({
   author,
   selfMode,
   id,
+  deletePost,
 }) => {
   const { dark } = useSelector((state) => state.common);
   return (
@@ -36,7 +37,10 @@ const FeedItem = ({
           {selfMode ? (
             <>
               <button className="col edit-btn btn  me-1 ">Edit</button>
-              <button className="col delete-btn btn btn-danger ms-1">
+              <button
+                className="col delete-btn btn btn-danger ms-1"
+                onClick={() => deletePost(id)}
+              >
                 Delete
               </button>
             </>

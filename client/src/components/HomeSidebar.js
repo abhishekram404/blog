@@ -16,7 +16,7 @@ export default function HomeSidebar() {
 
   const [active, setActive] = useState("");
   const { isLoading, data } = useQuery("userInfo", () =>
-    axios.get("/user/fetchUserInfo?fields=name")
+    axios.get("/user/fetchUserInfo")
   );
   const p =
     location.pathname.split("/")[location.pathname.split("/").length - 1];

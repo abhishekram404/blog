@@ -31,14 +31,10 @@ export default function Navbar() {
       window.removeEventListener("resize", null);
     };
   }, []);
-  const query = useQuery(
-    "userData",
-    () => axios.get("/user/fetchUserInfo?fields=name"),
-    {
-      onSuccess: ({ data }) => setName(data.details.name),
-      enabled: Boolean(isUserLoggedIn),
-    }
-  );
+  const query = useQuery("userData", () => axios.get("/user/fetchUserInfo"), {
+    onSuccess: ({ data }) => setName(data.details.name),
+    enabled: Boolean(isUserLoggedIn),
+  });
 
   return (
     <div
