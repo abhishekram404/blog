@@ -28,7 +28,6 @@ function CreatePost() {
     async () => await axios.get("/user/fetchUserInfo"),
     {
       onSuccess: ({ data }) => {
-        console.log(data);
         setUser(data.details);
       },
       enabled: Boolean(isUserLoggedIn),
@@ -108,7 +107,6 @@ function CreatePost() {
     await generatePreviewData(values);
     createPostMutation.mutate(formData, {
       onSuccess: async ({ data }) => {
-        console.log(await data);
         if (data.success) {
           props.resetForm();
           setFormData({
@@ -142,7 +140,6 @@ function CreatePost() {
     await generatePreviewData(props.values);
     createDraftMutation.mutate(formData, {
       onSuccess: async ({ data }) => {
-        console.log(await data);
         if (data.success) {
           props.resetForm();
           setFormData({
@@ -164,7 +161,6 @@ function CreatePost() {
         });
       },
       onError: (error) => {
-        // console.log(error.response);
         dispatch({
           type: ERROR,
           payload: error.response.data.message,
