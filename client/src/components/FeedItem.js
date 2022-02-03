@@ -1,18 +1,33 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import "styles/feedItem.scss";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import clsx from "clsx";
-const FeedItem = ({
-  title,
-  tags,
-  // category,
-  author,
-  selfMode,
-  id,
-  deletePost,
-}) => {
+import { useMutation } from "react-query";
+import axios from "axios";
+import { SUCCESS } from "redux/constants";
+const FeedItem = ({ title, tags, author, selfMode, id, refetchPosts }) => {
   const { dark } = useSelector((state) => state.common);
+  const dispatch = useDispatch();
+
+  const deletePostMutation = useMutation(
+    (postId) => axios.delete(`/post/delete?postId=${postId}`),
+    {
+      onSuccess: ({ data }) => {
+        dispatch({
+          type: SUCCESS,
+          payload: data.message,
+        });
+        refetchPosts();
+      },
+      onError: (error) => console.log(error),
+    }
+  );
+
+  const deletePost = (postId) => {
+    deletePostMutation.mutate(postId);
+  };
+
   return (
     <div
       className={clsx(

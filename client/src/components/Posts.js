@@ -1,35 +1,15 @@
 import clsx from "clsx";
 import React, { Suspense } from "react";
 import "styles/posts.scss";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import Loading from "./Loading";
 import { useMutation, useQuery } from "react-query";
 import axios from "axios";
 import Cookies from "js-cookie";
-import { SUCCESS } from "redux/constants";
 const FeedItem = React.lazy(() => import("./FeedItem"));
 export default function Posts() {
   const { dark } = useSelector((state) => state.common);
-  const dispatch = useDispatch();
   const ownId = Cookies.get("userId");
-
-  const deletePostMutation = useMutation(
-    (postId) => axios.delete(`/post/delete?postId=${postId}`),
-    {
-      onSuccess: ({ data }) => {
-        dispatch({
-          type: SUCCESS,
-          payload: data.message,
-        });
-        refetchPosts();
-      },
-      onError: (error) => console.log(error),
-    }
-  );
-
-  const deletePost = (postId) => {
-    deletePostMutation.mutate(postId);
-  };
 
   let {
     isLoading,
@@ -71,7 +51,7 @@ export default function Posts() {
                   tags={post.tags}
                   id={post._id}
                   selfMode={true}
-                  deletePost={deletePost}
+                  refetchPosts={refetchPosts}
                 />
               );
             })}
