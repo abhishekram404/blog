@@ -17,8 +17,8 @@ export default function Drafts() {
     isError,
     isSuccess,
     error,
-    refetch: refetchPosts,
-  } = useQuery("profilePosts", () =>
+    refetch: refetchDrafts,
+  } = useQuery("draftPosts", () =>
     axios.get(`/post/fetchDrafts`, {
       params: {
         profile: ownId,
@@ -39,9 +39,15 @@ export default function Drafts() {
       <h3>Drafts</h3>
       <div className="drafts-list p-2">
         <Suspense fallback={<Loading />}>
-          {data.map((post) => (
-            <DraftItem title={post.title} id={post._id} key={post._id} />
-          ))}
+          {isSuccess &&
+            data.map((post) => (
+              <DraftItem
+                title={post.title}
+                id={post._id}
+                refetchDrafts={refetchDrafts}
+                key={post._id}
+              />
+            ))}
         </Suspense>
       </div>
     </div>
