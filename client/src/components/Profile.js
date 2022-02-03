@@ -16,7 +16,6 @@ const FeedItem = React.lazy(() => import("./FeedItem"));
 const Error404 = React.lazy(() => import("./Error404"));
 const Posts = React.lazy(() => import("./Posts"));
 const Drafts = React.lazy(() => import("./Drafts"));
-const Saved = React.lazy(() => import("./Saved"));
 const HomeSidebar = React.lazy(() => import("./HomeSidebar"));
 export default function Profile() {
   const dispatch = useDispatch();
@@ -155,11 +154,6 @@ export default function Profile() {
               <Route path={`${url}/drafts`}>
                 <Suspense fallback={<Loading />}>
                   <Drafts />
-                </Suspense>
-              </Route>
-              <Route path={`${url}/saved`}>
-                <Suspense fallback={<Loading />}>
-                  <Saved />
                 </Suspense>
               </Route>
             </div>

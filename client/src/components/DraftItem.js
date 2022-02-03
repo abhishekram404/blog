@@ -3,7 +3,7 @@ import clsx from "clsx";
 import React from "react";
 import { useMutation } from "react-query";
 import { useDispatch, useSelector } from "react-redux";
-import { SUCCESS } from "redux/constants";
+import { ERROR, SUCCESS } from "redux/constants";
 import "styles/draftItem.scss";
 export default function DraftItem({ title, id, refetchDrafts }) {
   const { dark } = useSelector((state) => state.common);
@@ -27,6 +27,25 @@ export default function DraftItem({ title, id, refetchDrafts }) {
     deleteDraftMutation.mutate(postId);
   };
 
+  const publishMutation = useMutation(
+    (postId) => axios.put(`/post/publishDraft?postId=${postId}`),
+    {
+      onSuccess: ({ data }) => {
+        console.log(data);
+        dispatch({ type: SUCCESS, payload: data.message });
+        refetchDrafts();
+      },
+      onError: (error) => {
+        console.log(error);
+        dispatch({ type: ERROR, payload: "Sorry! Something went wrong." });
+      },
+    }
+  );
+
+  const publishDraft = (postId) => {
+    publishMutation.mutate(postId);
+  };
+
   return (
     <div
       className={clsx(
@@ -45,7 +64,10 @@ export default function DraftItem({ title, id, refetchDrafts }) {
         >
           Delete
         </button>
-        <button className="btn btn-primary btn-sm me-2 shadow-none">
+        <button
+          className="btn btn-primary btn-sm me-2 shadow-none"
+          onClick={() => publishDraft(id)}
+        >
           Publish
         </button>
       </div>

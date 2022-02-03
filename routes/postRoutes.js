@@ -7,4 +7,5 @@ router.get("/fetchHomepagePosts", postController.fetchHomepagePosts);
 router.get("/fetchProfilePosts", postController.fetchProfilePosts);
 router.get("/fetch", postController.fetchAPost);
 router.get("/fetchDrafts", auth, postController.fetchDrafts);
+router.put("/publishDraft", auth, postController.publishDraft);
 module.exports = router;

@@ -39,7 +39,7 @@ export default function Drafts() {
       <h3>Drafts</h3>
       <div className="drafts-list p-2">
         <Suspense fallback={<Loading />}>
-          {isSuccess &&
+          {isSuccess && data.length > 0 ? (
             data.map((post) => (
               <DraftItem
                 title={post.title}
@@ -47,7 +47,10 @@ export default function Drafts() {
                 refetchDrafts={refetchDrafts}
                 key={post._id}
               />
-            ))}
+            ))
+          ) : (
+            <h3>No drafts</h3>
+          )}
         </Suspense>
       </div>
     </div>

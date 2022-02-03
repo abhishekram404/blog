@@ -207,3 +207,43 @@ module.exports.fetchDrafts = async (req, res) => {
     });
   }
 };
+
+module.exports.publishDraft = async (req, res) => {
+  try {
+    const { authUserId } = await req;
+    const { postId } = await req.query;
+    const updatedPost = await Post.findOneAndUpdate(
+      {
+        "author.authorId": ObjectId(authUserId),
+        _id: postId,
+      },
+      {
+        published: true,
+      },
+      {
+        new: true,
+      }
+    );
+
+    if (!updatedPost) {
+      return res.status(400).send({
+        success: true,
+        message: "The requested operation couldn't be completed",
+        details: updatedPost,
+      });
+    }
+
+    return res.status(200).send({
+      success: true,
+      message: "The post has been successfully published.",
+      details: updatedPost,
+    });
+  } catch (error) {
+    console.log(error.message);
+    return res.status(500).send({
+      success: false,
+      message: "Failed to publish the post. Please try again.",
+      details: error,
+    });
+  }
+};

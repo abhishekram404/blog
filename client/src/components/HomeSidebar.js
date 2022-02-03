@@ -32,9 +32,7 @@ export default function HomeSidebar() {
       case "posts":
         setActive("posts");
         break;
-      case "saved":
-        setActive("saved");
-        break;
+
       case "drafts":
         setActive("drafts");
         break;
@@ -92,15 +90,6 @@ export default function HomeSidebar() {
             Drafts
           </Link>
         </li>
-        <li className={clsx("side-nav-item", active === "saved" && "active")}>
-          <Link to="/profile/saved">
-            <span>
-              <MdOutlineBookmarkBorder />
-            </span>
-            Saved
-          </Link>
-        </li>
-
         <hr />
 
         <li
