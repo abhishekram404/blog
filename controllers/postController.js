@@ -183,3 +183,27 @@ module.exports.deletePost = async (req, res) => {
     });
   }
 };
+
+module.exports.fetchDrafts = async (req, res) => {
+  try {
+    const { authUserId } = await req;
+
+    const foundPosts = await Post.find({
+      "author.authorId": ObjectId(authUserId),
+      published: false,
+    });
+
+    return res.status(200).send({
+      success: true,
+      message: "Drafts fetched successfully.",
+      details: foundPosts,
+    });
+  } catch (error) {
+    console.log(error.message);
+    return res.status(500).send({
+      success: false,
+      message: "Failed to fetch drafts.",
+      details: error,
+    });
+  }
+};

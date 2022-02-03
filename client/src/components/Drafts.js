@@ -19,7 +19,7 @@ export default function Drafts() {
     error,
     refetch: refetchPosts,
   } = useQuery("profilePosts", () =>
-    axios.get(`/post/fetchProfilePosts`, {
+    axios.get(`/post/fetchDrafts`, {
       params: {
         profile: ownId,
       },
