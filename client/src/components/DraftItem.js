@@ -2,7 +2,7 @@ import clsx from "clsx";
 import React from "react";
 import { useSelector } from "react-redux";
 import "styles/draftItem.scss";
-export default function DraftItem() {
+export default function DraftItem({ title, id }) {
   const { dark } = useSelector((state) => state.common);
   return (
     <div
@@ -12,10 +12,7 @@ export default function DraftItem() {
       )}
     >
       <div className="col title-row p-3">
-        <h4>
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Quas,
-          officiis?
-        </h4>
+        <h4>{title}</h4>
       </div>
       <div className="col buttons-row px-3 py-2">
         <button className="btn btn-light btn-sm me-2 shadow-none">Edit</button>
