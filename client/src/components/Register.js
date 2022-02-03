@@ -53,7 +53,6 @@ export default function Register() {
     {
       onSuccess: ({ data }) => {
         setSubmitting(false);
-        console.log(data);
         dispatch({ type: SUCCESS, payload: data.message });
         return history.push("/login");
       },

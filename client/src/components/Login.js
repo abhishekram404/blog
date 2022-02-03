@@ -28,7 +28,6 @@ export default function Login() {
     async (v) => await axios.post("/user/login", v),
     {
       onSuccess: ({ data }) => {
-        console.log(data);
         setSubmitting(false);
         dispatch({ type: AUTHENTICATED });
         return dispatch({

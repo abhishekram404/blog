@@ -124,7 +124,6 @@ export default function Profile() {
                       {!profilePostsLoading &&
                       profilePosts.data.details.length > 0 ? (
                         profilePosts.data.details.map((post) => {
-                          console.log(post);
                           return (
                             <FeedItem
                               title={post.title}

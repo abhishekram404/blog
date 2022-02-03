@@ -310,8 +310,6 @@ module.exports.updateProfile = async (req, res) => {
       message: "Profile information updated successfully.",
       details: updatedUser,
     });
-
-    console.log(value);
   } catch (error) {
     console.log(error.message);
     return res.status(500).send({

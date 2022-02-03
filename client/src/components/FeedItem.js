@@ -11,7 +11,6 @@ const FeedItem = ({
   selfMode,
   id,
 }) => {
-  console.log(tags);
   const { dark } = useSelector((state) => state.common);
   return (
     <div
