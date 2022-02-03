@@ -129,6 +129,8 @@ module.exports.login = async (req, res) => {
 
 module.exports.logout = async (req, res) => {
   try {
+    const isProduction = process.env.NODE_ENV === "production";
+
     res.clearCookie("isUserLoggedIn", {
       httpOnly: false,
       path: "/",
