@@ -67,7 +67,7 @@ module.exports.fetchHomepagePosts = async (req, res) => {
     const { skip } = await req.query;
     const posts = await Post.find(
       { published: true },
-      "title  category author tags"
+      "title  category author tags createdAt"
     )
       .sort({ _id: -1 })
       // .skip(Number(skip))
@@ -95,7 +95,7 @@ module.exports.fetchProfilePosts = async (req, res) => {
         published: true,
         "author.authorId": new ObjectId(profile),
       },
-      "title tags category author"
+      "title tags category author createdAt"
     )
       .sort({ $natural: -1 })
       .lean();

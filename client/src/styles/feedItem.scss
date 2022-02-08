@@ -9,6 +9,7 @@
   }
 
   .card-body {
+    padding-bottom: 0;
     .post-title {
       font-family: "Poppins", sans-serif;
     }
@@ -34,6 +35,12 @@
           font-family: "Poppins", sans-serif;
           font-size: 0.8rem;
         }
+      }
+      > .createdAt {
+        display: flex;
+        align-items: center;
+        gap: 5px;
+        font-size: 0.8rem;
       }
 
       > .edit-btn,

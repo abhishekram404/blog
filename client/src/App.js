@@ -78,7 +78,7 @@ function App() {
   }, [type, message]);
 
   return (
-    <HashRouter>
+    <HashRouter basename="/">
       <div className={clsx("app", dark ? "app_dark" : "app_light")}>
         <Navbar />
 

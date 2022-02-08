@@ -52,14 +52,10 @@ export default function Login(props) {
     await loginMutation.mutateAsync(values);
   };
 
-  console.log(props.location);
-
-  const referer = location.state && location.state.referer;
-
-  console.log(referer);
   if (isUserLoggedIn) {
-    return <Redirect to={referer} />;
+    return <Redirect to="/" />;
   }
+  // else render login page
 
   return (
     <div

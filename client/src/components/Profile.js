@@ -131,6 +131,7 @@ export default function Profile() {
                               key={post._id}
                               tags={post.tags}
                               id={post._id}
+                              createdAt={post.createdAt}
                             />
                           );
                         })

@@ -23,6 +23,8 @@ export default function Homepage() {
     });
   }
 
+  console.log(data);
+
   if (isLoading) return <Loading />;
   return (
     <div
@@ -45,6 +47,7 @@ export default function Homepage() {
                     author={post.author}
                     key={post._id}
                     id={post._id}
+                    createdAt={post.createdAt}
                   />
                 ))
               ) : (

@@ -13,15 +13,19 @@ export default function Post({ title, body, category, preview = false }) {
   const { dark } = useSelector((state) => state.common);
   const { id } = useParams();
   const dispatch = useDispatch();
-  // const [post, setPost] = useState({ title: "", category: "", content: "" });
+  let [post, setPost] = useState({ title: "", category: "", content: "" });
 
-  let {
-    isLoading,
-    isError,
-    data: post,
-  } = useQuery("fetchedPost", () => axios.get(`/post/fetch?id=${id}`), {
-    enabled: !preview,
-  });
+  let { isLoading, isError } = useQuery(
+    "fetchedPost",
+    () => axios.get(`/post/fetch?id=${id}`),
+    {
+      enabled: !preview,
+      onSuccess: ({ data }) => {
+        console.log(data);
+        setPost(data.details);
+      },
+    }
+  );
 
   if (isLoading) {
     return <Loading />;
@@ -33,10 +37,7 @@ export default function Post({ title, body, category, preview = false }) {
       payload: "Something went wrong while fetching the post.",
     });
   }
-  if (!preview) {
-    console.log(post);
-    post = post.data.details;
-  } else {
+  if (preview) {
     post = { title, category, content: body };
   }
 

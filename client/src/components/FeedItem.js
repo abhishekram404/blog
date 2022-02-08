@@ -6,7 +6,17 @@ import clsx from "clsx";
 import { useMutation } from "react-query";
 import axios from "axios";
 import { SUCCESS } from "redux/constants";
-const FeedItem = ({ title, tags, author, selfMode, id, refetchPosts }) => {
+import moment from "moment";
+import { AiOutlineClockCircle } from "react-icons/ai";
+const FeedItem = ({
+  title,
+  tags,
+  author,
+  selfMode,
+  id,
+  refetchPosts,
+  createdAt,
+}) => {
   const { dark } = useSelector((state) => state.common);
   const dispatch = useDispatch();
 
@@ -74,6 +84,13 @@ const FeedItem = ({ title, tags, author, selfMode, id, refetchPosts }) => {
                   <Link to="/user/abhishek">@{author?.authorUsername}</Link>
                 </small>
               </div>
+              <small className="createdAt text-right">
+                <AiOutlineClockCircle />{" "}
+                <span>
+                  {createdAt &&
+                    `${moment(createdAt).startOf("second").fromNow()}`}
+                </span>
+              </small>
             </>
           )}
         </div>
