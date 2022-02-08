@@ -15,7 +15,9 @@ import { useDispatch } from "react-redux";
 import { ERROR, INFO, SUCCESS } from "redux/constants";
 import { withRouter, useHistory } from "react-router-dom";
 import { useMutation, useQuery } from "react-query";
-const CKEditor = React.lazy(() => import("react-ckeditor-component"));
+// const CKEditor = React.lazy(() => import("react-ckeditor-component"));
+import { CKEditor } from "@ckeditor/ckeditor5-react";
+import { Editor } from "ckeditor5-custom-build/build/ckeditor";
 const Post = React.lazy(() => import("./Post"));
 function CreatePost() {
   const dispatch = useDispatch();
@@ -293,15 +295,9 @@ function CreatePost() {
 
                   <Suspense fallback={<Loading />}>
                     <CKEditor
-                      content={formData.content}
-                      activeClass="editor"
-                      events={{
-                        change: (e) => debounce(e.editor.getData()),
-                      }}
-                      config={{
-                        removeButtons:
-                          "Cut,Copy,Paste,Anchor,Scayt,PasteText,PasteFromWord,About",
-                      }}
+                      editor={Editor}
+                      data={formData.content}
+                      onChange={(event, editor) => debounce(editor.getData())}
                     />
                   </Suspense>
                 </div>
