@@ -62,7 +62,7 @@ app.use("/api/post", postRoutes);
 if (process.env.NODE_ENV === "production") {
   app.use(express.static(path.join(__dirname, "client", "build")));
   app.get("*", async (req, res) => {
-    return res.sendFile(__dirname, "client", "build", "index.html");
+    res.sendFile(__dirname, "client", "build", "index.html");
   });
 }
 
