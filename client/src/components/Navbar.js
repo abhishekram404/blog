@@ -4,11 +4,14 @@ import { Link } from "react-router-dom";
 import "styles/navbar.scss";
 import { MdDarkMode, MdLightMode } from "react-icons/md";
 import { useDispatch, useSelector } from "react-redux";
-import { logout, toggle_dark_mode } from "redux/actions/commonActions";
+import { logout } from "redux/actions/commonActions";
 import { HiOutlineMenuAlt4 } from "react-icons/hi";
 import { useQuery } from "react-query";
 import axios from "axios";
+import { useDarkMode } from "utils/useDarkMode";
 export default function Navbar() {
+  const [isDark, toggle] = useDarkMode();
+
   const dispatch = useDispatch();
   const { dark, isUserLoggedIn } = useSelector((state) => state.common);
   // const { user } = useSelector((state) => state.user);
@@ -109,7 +112,7 @@ export default function Navbar() {
             <li
               className="nav-item  dark-mode-switch"
               // role="button"
-              onClick={() => dispatch(toggle_dark_mode())}
+              onClick={toggle}
             >
               {dark ? (
                 <MdLightMode className="icon" />

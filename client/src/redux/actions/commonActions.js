@@ -1,4 +1,5 @@
 import axios from "axios";
+import { useDarkMode } from "utils/useDarkMode";
 
 const {
   TOGGLE_DARK_MODE,
@@ -8,9 +9,12 @@ const {
   CLEAR_ALL,
 } = require("redux/constants");
 
-export const toggle_dark_mode = () => {
+export const toggle_dark_mode = (dark) => {
+  //  const [isDark, toggle ] = useDarkMode()
+
   return {
     type: TOGGLE_DARK_MODE,
+    payload: dark,
   };
 };
 

@@ -15,7 +15,7 @@ const commonReducer = (
     case TOGGLE_DARK_MODE:
       return {
         ...state,
-        dark: !state.dark,
+        dark: action.payload,
       };
     case LOADING_ON:
       return {
