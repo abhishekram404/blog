@@ -1,4 +1,4 @@
-import React, { Suspense, useEffect } from "react";
+import React, { Suspense } from "react";
 import "styles/Homepage.scss";
 import clsx from "clsx";
 import { useSelector, useDispatch } from "react-redux";
@@ -11,7 +11,6 @@ const HomeSidebar = React.lazy(() => import("./HomeSidebar"));
 export default function Homepage() {
   const dispatch = useDispatch();
   const { dark, isUserLoggedIn } = useSelector((state) => state.common);
-  const { user } = useSelector((state) => state.user);
 
   const { isLoading, data, isError } = useQuery("homepagePosts", () =>
     axios.get("/post/fetchHomepagePosts")
@@ -22,8 +21,6 @@ export default function Homepage() {
       payload: "Something went wrong while fetching the posts.",
     });
   }
-
-  console.log(data);
 
   if (isLoading) return <Loading />;
   return (

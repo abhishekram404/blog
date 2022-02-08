@@ -1,5 +1,5 @@
 import React from "react";
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 import { Redirect, Route } from "react-router";
 
 export default function ProtectedRoute({ component: Component, ...rest }) {

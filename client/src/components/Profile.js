@@ -1,4 +1,4 @@
-import React, { Suspense, useState } from "react";
+import React, { Suspense } from "react";
 import clsx from "clsx";
 import { useSelector, useDispatch } from "react-redux";
 import { IoLocationOutline } from "react-icons/io5";
@@ -37,7 +37,7 @@ export default function Profile() {
 
   const {
     isLoading: userInfoLoading,
-    isError: userInfoError,
+    // isError: userInfoError,
     data: user,
   } = useQuery("userData", () => axios.get("/user/fetchUserInfo"));
 

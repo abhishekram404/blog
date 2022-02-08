@@ -6,11 +6,11 @@ import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import axios from "axios";
 import { useDispatch } from "react-redux";
-import { ERROR, SUCCESS, ALERT, AUTHENTICATED } from "redux/constants";
+import { ERROR, SUCCESS } from "redux/constants";
 import { Redirect } from "react-router";
 import { useHistory } from "react-router-dom";
 import { debounce as db } from "lodash-es";
-import { useQuery, useMutation } from "react-query";
+import { useMutation } from "react-query";
 export default function Register() {
   const dispatch = useDispatch();
   const [isSubmitting, setSubmitting] = useState(false);

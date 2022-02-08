@@ -12,7 +12,6 @@ export default function Drafts() {
   const ownId = Cookies.get("userId");
 
   let {
-    isLoading,
     data,
     isError,
     isSuccess,

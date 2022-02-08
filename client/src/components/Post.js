@@ -21,7 +21,6 @@ export default function Post({ title, body, category, preview = false }) {
     {
       enabled: !preview,
       onSuccess: ({ data }) => {
-        console.log(data);
         setPost(data.details);
       },
     }

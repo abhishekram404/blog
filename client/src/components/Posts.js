@@ -3,7 +3,7 @@ import React, { Suspense } from "react";
 import "styles/posts.scss";
 import { useSelector } from "react-redux";
 import Loading from "./Loading";
-import { useMutation, useQuery } from "react-query";
+import { useQuery } from "react-query";
 import axios from "axios";
 import Cookies from "js-cookie";
 const FeedItem = React.lazy(() => import("./FeedItem"));

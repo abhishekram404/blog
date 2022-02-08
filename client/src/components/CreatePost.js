@@ -5,17 +5,16 @@ import { WithContext as ReactTags } from "react-tag-input";
 import { pascalCase } from "change-case";
 import { useSelector } from "react-redux";
 import { Formik, Form, Field, ErrorMessage } from "formik";
-import { create, debounce as db } from "lodash";
+import { debounce as db } from "lodash";
 import { AiOutlineEye } from "react-icons/ai";
 import { IoCreateOutline } from "react-icons/io5";
 import Loading from "./Loading";
 import * as Yup from "yup";
 import axios from "axios";
 import { useDispatch } from "react-redux";
-import { ERROR, INFO, SUCCESS } from "redux/constants";
+import { ERROR, SUCCESS } from "redux/constants";
 import { withRouter, useHistory } from "react-router-dom";
 import { useMutation, useQuery } from "react-query";
-// const CKEditor = React.lazy(() => import("react-ckeditor-component"));
 import { CKEditor } from "@ckeditor/ckeditor5-react";
 import { Editor } from "ckeditor5-custom-build/build/ckeditor";
 const Post = React.lazy(() => import("./Post"));
@@ -25,16 +24,12 @@ function CreatePost() {
   const { dark, isUserLoggedIn } = useSelector((state) => state.common);
   const [user, setUser] = useState({});
 
-  let { data } = useQuery(
-    "userData",
-    async () => await axios.get("/user/fetchUserInfo"),
-    {
-      onSuccess: ({ data }) => {
-        setUser(data.details);
-      },
-      enabled: Boolean(isUserLoggedIn),
-    }
-  );
+  useQuery("userData", async () => await axios.get("/user/fetchUserInfo"), {
+    onSuccess: ({ data }) => {
+      setUser(data.details);
+    },
+    enabled: Boolean(isUserLoggedIn),
+  });
 
   const [tags, setTags] = useState([]);
   const [previewMode, setPreviewMode] = useState(false);

@@ -6,7 +6,7 @@ import clsx from "clsx";
 import "styles/app.scss";
 import { useDispatch, useSelector } from "react-redux";
 import {
-  BrowserRouter as Router,
+  // BrowserRouter as Router,
   HashRouter,
   Route,
   Switch,
@@ -39,7 +39,7 @@ function App() {
     dispatch({ type: CLEAR_ALERT });
   };
 
-  const [authenticated, setAuthenticated] = useState(() =>
+  const [authenticated] = useState(() =>
     Boolean(Number(Cookies.get("isUserLoggedIn")))
   );
   useEffect(() => {

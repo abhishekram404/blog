@@ -14,7 +14,6 @@ export default function Navbar() {
 
   const dispatch = useDispatch();
   const { dark, isUserLoggedIn } = useSelector((state) => state.common);
-  // const { user } = useSelector((state) => state.user);
   const [navExpanded, setNavExpanded] = useState(false);
   const [name, setName] = useState("");
   const resize = () => {
@@ -34,7 +33,7 @@ export default function Navbar() {
       window.removeEventListener("resize", null);
     };
   }, []);
-  const query = useQuery("userData", () => axios.get("/user/fetchUserInfo"), {
+  useQuery("userData", () => axios.get("/user/fetchUserInfo"), {
     onSuccess: ({ data }) => setName(data.details.name),
     enabled: Boolean(isUserLoggedIn),
   });
