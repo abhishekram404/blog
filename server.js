@@ -57,15 +57,14 @@ mongoose.connect(
   }
 );
 
+app.use("/api/user", userRoutes);
+app.use("/api/post", postRoutes);
 if (process.env.NODE_ENV === "production") {
   app.use(express.static(path.join(__dirname, "client", "build")));
-  app.get("/", async (req, res) => {
+  app.get("*", async (req, res) => {
     return res.sendFile(__dirname, "client", "build", "index.html");
   });
 }
-
-app.use("/api/user", userRoutes);
-app.use("/api/post", postRoutes);
 
 const port = process.env.PORT || 4000;
 app.listen(port, (err) => {

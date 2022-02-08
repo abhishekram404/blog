@@ -11,11 +11,12 @@ import {
   ERROR,
   SUCCESS,
 } from "redux/constants";
-import { Redirect } from "react-router";
+import { Redirect, useLocation } from "react-router";
 import { useMutation } from "react-query";
-export default function Login() {
+export default function Login(props) {
   const [isSubmitting, setSubmitting] = useState(false);
 
+  const location = useLocation();
   const dispatch = useDispatch();
   const { dark, isUserLoggedIn } = useSelector((state) => state.common);
   const loginSchema = Yup.object({
@@ -51,8 +52,13 @@ export default function Login() {
     await loginMutation.mutateAsync(values);
   };
 
+  console.log(props.location);
+
+  const referer = location.state && location.state.referer;
+
+  console.log(referer);
   if (isUserLoggedIn) {
-    return <Redirect to="/" />;
+    return <Redirect to={referer} />;
   }
 
   return (

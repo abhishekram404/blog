@@ -5,7 +5,12 @@ import ProtectedRoute from "components/ProtectedRoute";
 import clsx from "clsx";
 import "styles/app.scss";
 import { useDispatch, useSelector } from "react-redux";
-import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  HashRouter,
+  Route,
+  Switch,
+} from "react-router-dom";
 import { useEffect } from "react";
 import { useAlert } from "react-alert";
 import {
@@ -73,7 +78,7 @@ function App() {
   }, [type, message]);
 
   return (
-    <Router>
+    <HashRouter>
       <div className={clsx("app", dark ? "app_dark" : "app_light")}>
         <Navbar />
 
@@ -89,7 +94,7 @@ function App() {
           </Switch>
         </Suspense>
       </div>
-    </Router>
+    </HashRouter>
   );
 }
 

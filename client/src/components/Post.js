@@ -1,5 +1,5 @@
 import clsx from "clsx";
-import React from "react";
+import React, { useState } from "react";
 import Loading from "./Loading";
 import "styles/post.scss";
 import { useDispatch, useSelector } from "react-redux";
@@ -13,6 +13,7 @@ export default function Post({ title, body, category, preview = false }) {
   const { dark } = useSelector((state) => state.common);
   const { id } = useParams();
   const dispatch = useDispatch();
+  // const [post, setPost] = useState({ title: "", category: "", content: "" });
 
   let {
     isLoading,
@@ -33,6 +34,7 @@ export default function Post({ title, body, category, preview = false }) {
     });
   }
   if (!preview) {
+    console.log(post);
     post = post.data.details;
   } else {
     post = { title, category, content: body };
