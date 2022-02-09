@@ -39,16 +39,20 @@ function App() {
     dispatch({ type: CLEAR_ALERT });
   };
 
-  const [authenticated] = useState(() =>
-    Boolean(Number(Cookies.get("isUserLoggedIn")))
+  const [authenticated] = useState(
+    () =>
+      sessionStorage.getItem("isUserLoggedIn") === "true" ||
+      Boolean(Number(Cookies.get("isUserLoggedIn")))
   );
   useEffect(() => {
     if (!authenticated) {
+      sessionStorage.removeItem("isUserLoggedIn");
+
       return dispatch({
         type: NOT_AUTHENTICATED,
-        // type: AUTHENTICATED,
       });
     } else {
+      sessionStorage.setItem("isUserLoggedIn", true);
       return dispatch({
         type: AUTHENTICATED,
       });

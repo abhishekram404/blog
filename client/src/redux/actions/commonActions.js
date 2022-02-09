@@ -24,6 +24,7 @@ export const logout = () => {
       const { data } = await axios.post("/user/logout");
       switch (data.success) {
         case true:
+          sessionStorage.removeItem("isUserLoggedIn");
           dispatch({
             type: LOGOUT,
           });
@@ -36,6 +37,7 @@ export const logout = () => {
           });
           break;
         case false:
+          sessionStorage.removeItem("isUserLoggedIn");
           dispatch({
             type: ERROR,
             payload: data.message,
@@ -48,6 +50,7 @@ export const logout = () => {
           return;
       }
     } catch (error) {
+      sessionStorage.removeItem("isUserLoggedIn");
       dispatch({
         type: ERROR,
         message: "Something went wrong!",

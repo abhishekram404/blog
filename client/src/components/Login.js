@@ -30,6 +30,7 @@ export default function Login(props) {
     {
       onSuccess: ({ data }) => {
         setSubmitting(false);
+        sessionStorage.setItem("isUserLoggedIn", true);
         dispatch({ type: AUTHENTICATED });
         return dispatch({
           type: SUCCESS,
@@ -39,6 +40,8 @@ export default function Login(props) {
       onError: (error) => {
         console.log(error);
         setSubmitting(false);
+        sessionStorage.removeItem("isUserLoggedIn");
+
         dispatch({ type: NOT_AUTHENTICATED });
         return dispatch({
           type: ERROR,
