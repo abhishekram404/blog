@@ -10,7 +10,7 @@ import { useQuery } from "react-query";
 import axios from "axios";
 import { useDarkMode } from "utils/useDarkMode";
 export default function Navbar() {
-  const [isDark, toggle] = useDarkMode();
+  const [toggle] = useDarkMode();
 
   const dispatch = useDispatch();
   const { dark, isUserLoggedIn } = useSelector((state) => state.common);

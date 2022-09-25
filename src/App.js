@@ -5,13 +5,7 @@ import ProtectedRoute from "components/ProtectedRoute";
 import clsx from "clsx";
 import "styles/app.scss";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  // BrowserRouter as Router,
-  HashRouter,
-  Route,
-  BrowserRouter as Router,
-  Switch,
-} from "react-router-dom";
+import { Route, BrowserRouter as Router, Switch } from "react-router-dom";
 import { useEffect } from "react";
 import { useAlert } from "react-alert";
 import {
@@ -19,7 +13,6 @@ import {
   CLEAR_ALERT,
   ERROR,
   SUCCESS,
-  AUTHENTICATED,
   NOT_AUTHENTICATED,
   ALREADY_AUTHENTICATED,
 } from "redux/constants";
@@ -53,6 +46,7 @@ function App() {
         payload: token,
       });
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {
@@ -75,6 +69,7 @@ function App() {
       default:
         break;
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [type, message]);
 
   return (

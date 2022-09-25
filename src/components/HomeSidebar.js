@@ -3,7 +3,6 @@ import "styles/homeSidebar.scss";
 import { Link, useLocation } from "react-router-dom";
 import { IoNewspaperOutline, IoSettingsOutline } from "react-icons/io5";
 import { HiOutlineDocument } from "react-icons/hi";
-import { MdOutlineBookmarkBorder } from "react-icons/md";
 import clsx from "clsx";
 import { useSelector } from "react-redux";
 import { AiOutlineHome } from "react-icons/ai";
@@ -21,6 +20,7 @@ export default function HomeSidebar() {
   const p =
     location.pathname.split("/")[location.pathname.split("/").length - 1];
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {
     switch (p) {
       case "":

@@ -12,10 +12,10 @@ const useDarkMode = () => {
   const toggle = () => {
     setDark(!isDark);
   };
-
   useEffect(() => {
     localStorage.setItem("dark", isDark);
     dispatch(toggle_dark_mode(isDark));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isDark]);
 
   return [isDark, toggle];

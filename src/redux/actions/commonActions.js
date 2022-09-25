@@ -1,5 +1,4 @@
 import axios from "axios";
-import { useDarkMode } from "utils/useDarkMode";
 
 const {
   TOGGLE_DARK_MODE,
