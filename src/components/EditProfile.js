@@ -5,12 +5,14 @@ import { Formik, Form, Field, ErrorMessage } from "formik";
 import "styles/editProfile.scss";
 import * as Yup from "yup";
 import { Link } from "react-router-dom";
-import { useMutation, useQuery } from "react-query";
+import { useMutation, useQuery, useQueryClient } from "react-query";
 import Loading from "./Loading";
 import axios from "axios";
 import moment from "moment";
 import { SUCCESS } from "redux/constants";
+import { history } from "../history";
 export default function EditProfile() {
+  const queryClient = useQueryClient();
   const { dark } = useSelector((state) => state.common);
   const dispatch = useDispatch();
   const schema = Yup.object({
@@ -63,10 +65,13 @@ export default function EditProfile() {
     async (v) => await axios.put("/user/update", v),
     {
       onSuccess: ({ data }) => {
-        return dispatch({
+        queryClient.invalidateQueries("userData");
+        queryClient.invalidateQueries("profileInfo");
+        dispatch({
           type: SUCCESS,
           payload: data.message,
         });
+        return history.push("/profile");
       },
       onError: (error) => console.log(error),
     }
