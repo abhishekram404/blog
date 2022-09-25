@@ -8,6 +8,7 @@ export const INFO = "INFO";
 export const CLEAR_ALERT = "CLEAR_ALERT";
 export const GET_AUTH_DATA = "GET_AUTH_DATA";
 export const AUTHENTICATED = "AUTHENTICATED";
+export const ALREADY_AUTHENTICATED = "ALREADY_AUTHENTICATED";
 export const NOT_AUTHENTICATED = "NOT_AUTHENTICATED";
 export const LOADING_ON = "LOADING_ON";
 export const LOADING_OFF = "LOADING_OFF";

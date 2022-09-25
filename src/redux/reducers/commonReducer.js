@@ -1,3 +1,5 @@
+import axios from "axios";
+import Cookies from "js-cookie";
 const {
   TOGGLE_DARK_MODE,
   AUTHENTICATED,
@@ -5,6 +7,7 @@ const {
   LOADING_ON,
   LOADING_OFF,
   LOGOUT,
+  ALREADY_AUTHENTICATED,
 } = require("redux/constants");
 
 const commonReducer = (
@@ -30,17 +33,33 @@ const commonReducer = (
       };
 
     case AUTHENTICATED:
+      axios.defaults.headers.common[
+        "Authorization"
+      ] = `Bearer ${action.payload?.token}`;
+      Cookies.set("jwt", action.payload?.token, { expires: 7 });
       return {
         ...state,
         isUserLoggedIn: true,
       };
 
+    case ALREADY_AUTHENTICATED:
+      axios.defaults.headers.common[
+        "Authorization"
+      ] = `Bearer ${action.payload}`;
+      return {
+        ...state,
+        isUserLoggedIn: true,
+      };
     case NOT_AUTHENTICATED:
+      axios.defaults.headers.common["Authorization"] = `Bearer`;
+      Cookies.remove("jwt");
       return {
         ...state,
         isUserLoggedIn: false,
       };
     case LOGOUT:
+      axios.defaults.headers.common["Authorization"] = `Bearer`;
+      Cookies.remove("jwt");
       return {
         ...state,
         isUserLoggedIn: false,

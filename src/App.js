@@ -21,6 +21,7 @@ import {
   SUCCESS,
   AUTHENTICATED,
   NOT_AUTHENTICATED,
+  ALREADY_AUTHENTICATED,
 } from "redux/constants";
 import Cookies from "js-cookie";
 import Loading from "components/Loading";
@@ -40,23 +41,19 @@ function App() {
     dispatch({ type: CLEAR_ALERT });
   };
 
-  const [authenticated] = useState(() =>
-    Boolean(Number(Cookies.get("isUserLoggedIn")))
-  );
+  const [token] = useState(() => Cookies.get("jwt"));
   useEffect(() => {
-    if (!authenticated) {
-      sessionStorage.removeItem("isUserLoggedIn");
-
-      return dispatch({
+    if (!token) {
+      dispatch({
         type: NOT_AUTHENTICATED,
       });
     } else {
-      sessionStorage.setItem("isUserLoggedIn", true);
-      return dispatch({
-        type: AUTHENTICATED,
+      dispatch({
+        type: ALREADY_AUTHENTICATED,
+        payload: token,
       });
     }
-  }, [authenticated]);
+  }, []);
 
   useEffect(() => {
     switch (type) {

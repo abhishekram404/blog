@@ -28,20 +28,20 @@ export default function Login(props) {
   const loginMutation = useMutation(
     async (v) => await axios.post("/user/login", v),
     {
-      onSuccess: ({ data }) => {
-        setSubmitting(false);
-        sessionStorage.setItem("isUserLoggedIn", true);
-        dispatch({ type: AUTHENTICATED });
-        return dispatch({
-          type: SUCCESS,
-          payload: data.message,
-        });
+      onSuccess: (data) => {
+        if (data.status === 200) {
+          setSubmitting(false);
+          dispatch({ type: AUTHENTICATED, payload: data?.data?.details });
+          dispatch({
+            type: SUCCESS,
+            payload: data.message,
+          });
+          return history.push("/");
+        }
       },
       onError: (error) => {
         console.log(error);
         setSubmitting(false);
-        sessionStorage.removeItem("isUserLoggedIn");
-
         dispatch({ type: NOT_AUTHENTICATED });
         return dispatch({
           type: ERROR,
@@ -54,8 +54,6 @@ export default function Login(props) {
     setSubmitting(true);
     await loginMutation.mutateAsync(values);
   };
-
-  console.log(history);
 
   if (isUserLoggedIn) {
     return <Redirect to="/" />;
