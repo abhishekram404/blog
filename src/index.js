@@ -8,11 +8,8 @@ import axios from "axios";
 import { transitions, positions, Provider as AlertProvider } from "react-alert";
 import AlertTemplate from "react-alert-template-basic";
 import { QueryClientProvider, QueryClient } from "react-query";
-const isProduction = process.env.REACT_APP_NODE_ENV === "production";
 
-axios.defaults.baseURL = isProduction
-  ? "https://abhishekram404-blog-simple.herokuapp.com/api/"
-  : "http://localhost:4000/api/";
+axios.defaults.baseURL = process.env.REACT_APP_BASE_API;
 
 axios.defaults.withCredentials = true;
 const queryClient = new QueryClient();

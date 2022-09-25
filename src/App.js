@@ -9,6 +9,7 @@ import {
   // BrowserRouter as Router,
   HashRouter,
   Route,
+  BrowserRouter as Router,
   Switch,
 } from "react-router-dom";
 import { useEffect } from "react";
@@ -39,10 +40,8 @@ function App() {
     dispatch({ type: CLEAR_ALERT });
   };
 
-  const [authenticated] = useState(
-    () =>
-      sessionStorage.getItem("isUserLoggedIn") === "true" ||
-      Boolean(Number(Cookies.get("isUserLoggedIn")))
+  const [authenticated] = useState(() =>
+    Boolean(Number(Cookies.get("isUserLoggedIn")))
   );
   useEffect(() => {
     if (!authenticated) {
@@ -82,7 +81,7 @@ function App() {
   }, [type, message]);
 
   return (
-    <HashRouter basename="/">
+    <Router>
       <div className={clsx("app", dark ? "app_dark" : "app_light")}>
         <Navbar />
 
@@ -98,7 +97,7 @@ function App() {
           </Switch>
         </Suspense>
       </div>
-    </HashRouter>
+    </Router>
   );
 }
 
