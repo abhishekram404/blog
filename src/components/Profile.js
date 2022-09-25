@@ -10,7 +10,6 @@ import moment from "moment";
 import { useQuery } from "react-query";
 import axios from "axios";
 import { ERROR } from "redux/constants";
-import Cookies from "js-cookie";
 const EditProfile = React.lazy(() => import("./EditProfile"));
 const FeedItem = React.lazy(() => import("./FeedItem"));
 const Error404 = React.lazy(() => import("./Error404"));
@@ -20,20 +19,12 @@ const HomeSidebar = React.lazy(() => import("./HomeSidebar"));
 export default function Profile() {
   const dispatch = useDispatch();
   const { dark } = useSelector((state) => state.common);
-  const ownId = Cookies.get("userId");
   const { url } = useRouteMatch();
   const {
     isLoading: profilePostsLoading,
     data: profilePosts,
     isError: profilePostsError,
-  } = useQuery("profilePosts", () =>
-    axios.get(`/post/fetchProfilePosts`, {
-      params: {
-        // skip: profilePosts.length,
-        profile: ownId,
-      },
-    })
-  );
+  } = useQuery("profilePosts", () => axios.get(`/post/fetchOwnPosts`));
 
   const {
     isLoading: userInfoLoading,
@@ -41,15 +32,14 @@ export default function Profile() {
     data: user,
   } = useQuery("userData", () => axios.get("/user/fetchUserInfo"));
 
+  if (userInfoLoading || profilePostsLoading) {
+    return <Loading />;
+  }
   if (profilePostsError) {
     dispatch({
       type: ERROR,
       payload: "Failed to fetch profile posts.",
     });
-  }
-
-  if (userInfoLoading) {
-    return <Loading />;
   }
 
   return (
